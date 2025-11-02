@@ -1,0 +1,30 @@
+.text {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: gold;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  font-size: 70px;
+  
+}
+
+.img-pic img{
+    width: 800px;
+    height: 600px;
+}
+
+@media (max-width:900px) {
+    .img-pic img{
+        width: 700px;
+        height: 500px;
+
+    }
+
+    .text{
+        font-size: 40px;
+        top: 32%;
+    }
+}

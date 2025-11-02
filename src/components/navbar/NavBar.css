@@ -1,0 +1,77 @@
+.shop-name{
+    display: flex;
+    flex-direction: row;
+    gap: 500px;
+    background-color: black;
+    min-height: 60px;
+    color: gold;
+    padding-top: 10px;
+    border: 5px;
+    border-bottom: gold solid;
+}
+.jina{
+    padding-top: 13px;
+    padding-left: 15px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+.jina:hover{
+    color: white;
+}
+
+.icons{
+    gap: 3px;
+    min-width: 100px;
+    
+    
+}
+
+.navs{
+    background-color: black;
+    color: rgba(248, 232, 142, 0.74);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 5px solid gold;
+}
+
+.navs ul{
+    list-style: none;
+    display: flex;
+    gap: 79px;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: gold;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 900px) {
+  .navs ul {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .navs.active ul {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+  .jina{
+    width: 300px;
+  }
+  .shop-name{
+    gap: 300px;
+  }
+}

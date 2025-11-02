@@ -1,0 +1,31 @@
+.parent{
+    display: flex;
+    flex-direction: row;
+    gap: 400px;
+    border: 5px;
+    border-top:  solid gold;
+    background-color: black;
+    padding: 40px;
+
+}
+
+.icons{
+    
+    width: 100px;
+}
+
+.icons svg{
+    margin: 3px;
+    color: gold;
+    width: 25px;
+}
+
+.aboutus{
+    color: gold;
+}
+
+@media (max-width:900px){
+    .parent{
+        width: 655px;
+    }
+}

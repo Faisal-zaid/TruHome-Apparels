@@ -1,0 +1,21 @@
+h2{
+    color: white;
+}
+
+.products{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    margin-left: 10px;
+}
+
+
+@media(max-width:900px){
+.products{
+     width: 200px;
+}
+
+.products img{
+    height: 600px;
+}
+}
