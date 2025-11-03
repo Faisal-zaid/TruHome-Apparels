@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import "./NavBar.css";
+import { Link } from "react-router-dom";
+
 
 export default function NavBar() {
 
@@ -48,13 +50,16 @@ const [isOpen, setIsOpen] = useState(false);
         </div>
       </div>
      <nav className={`navs ${isOpen ? "active" : ""}`}>
-        <ul>
-          <li>HOME</li>
-          <li>PAJAMAS</li>
-          <li>NIGHT DRESS</li>
-          <li> ROMPERS</li>
-          <li>BATHROBES</li>
-        </ul>
+        
+          <ul>
+  <li><Link to="/">HOME</Link></li>
+  <li><Link to="/pajamas">PAJAMAS</Link></li>
+  <li><Link to="/nightdress">NIGHT DRESS</Link></li>
+  <li><Link to="/rompers">ROMPERS</Link></li>
+  <li><Link to="/bathrobes">BATHROBES</Link></li>
+</ul>
+
+        
       </nav>
     </div>
   );
