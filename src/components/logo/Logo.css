@@ -4,27 +4,30 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: gold;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 5vw, 4rem);
   font-weight: bold;
   text-align: center;
-  font-size: 70px;
-  
 }
 
-.img-pic img{
-    width: 800px;
-    height: 600px;
+
+.img-pic img {
+  width: 100%;
+  height: auto;
+  max-width: 800px;
 }
 
-@media (max-width:900px) {
-    .img-pic img{
-        width: 700px;
-        height: 500px;
 
-    }
+@media (max-width: 900px) {
+  .text {
+    font-size: clamp(1.2rem, 5vw, 3rem);
+    top: 45%;
+  }
+}
 
-    .text{
-        font-size: 40px;
-        top: 32%;
-    }
+/* Phone */
+@media (max-width: 600px) {
+  .text {
+    font-size: clamp(1rem, 7vw, 2rem);
+    top: 35%;
+  }
 }

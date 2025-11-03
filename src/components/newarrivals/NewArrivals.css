@@ -2,20 +2,30 @@ h2{
     color: white;
 }
 
-.products{
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    margin-left: 10px;
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.products img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
 }
 
 
-@media(max-width:900px){
-.products{
-     width: 200px;
+
+@media (max-width: 900px) {
+  .products img {
+    max-width: 45%;
+  }
 }
 
-.products img{
-    height: 600px;
-}
+/* Phones */
+@media (max-width: 600px) {
+  .products img {
+    max-width: 90%;
+  }
 }

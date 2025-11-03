@@ -1,15 +1,15 @@
-.shop-name{
-  
-    display: flex;
-    flex-direction: row;
-    gap: 75%;
-    background-color: black;
-    min-height: 60px;
-    color: gold;
-    padding-top: 10px;
-    border: 5px;
-    border-bottom: gold solid;
+.shop-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  min-height: 60px;
+  color: gold;
+  padding: 10px 20px;
+  border-bottom: 2px solid gold;
+  flex-wrap: wrap; /* Important: allows it to wrap on small screens */
 }
+
 .jina{
     padding-top: 13px;
     padding-left: 15px;
@@ -55,11 +55,19 @@
 }
 
 @media (max-width: 900px) {
+  .shop-name {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
   .navs ul {
     display: none;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 1.5rem;
+    background-color: black;
+    width: 100%;
+    padding: 20px;
   }
 
   .navs.active ul {
@@ -68,38 +76,26 @@
 
   .hamburger {
     display: flex;
-  }
-  .jina{
-    width: 300px;
-  }
-  .shop-name{
-    gap: 300px;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
   }
 }
 
-@media (max-width:500px) {
-  .navs ul {
-    display: none;
+/* Phones */
+@media (max-width: 600px) {
+  .shop-name {
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    align-items: flex-start;
+    padding: 15px;
   }
 
-  .navs.active ul {
-    display: flex;
+  .jina {
+    font-size: 1rem;
   }
 
-  .hamburger {
-    display: flex;
-  }
-  .jina{
-    width: 30%;
-  }
-  .shop-name{
-    gap: 30%;
-  }
-
-  .main{
-    width: 90vh;
+  .navs ul {
+    gap: 1rem;
+    font-size: 0.9rem;
   }
 }

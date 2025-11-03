@@ -1,13 +1,27 @@
-.parent{
-    display: flex;
-    flex-direction: row;
-    gap: 400px;
-    border: 5px;
-    border-top:  solid gold;
-    background-color: black;
-    padding: 40px;
-
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: black;
+  border-top: 2px solid gold;
 }
+
+.icons svg {
+  width: 25px;
+  height: 25px;
+  margin: 5px;
+  color: gold;
+}
+
+.aboutus {
+  color: gold;
+  text-align: center;
+  width: 100%;
+}
+
 
 .icons{
     
@@ -24,8 +38,28 @@
     color: gold;
 }
 
-@media (max-width:900px){
-    .parent{
-        width: 655px;
-    }
+@media (max-width: 900px) {
+  .parent {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .icons svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .aboutus {
+    font-size: 0.9rem;
+  }
 }
