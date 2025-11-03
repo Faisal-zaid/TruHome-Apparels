@@ -7,7 +7,7 @@ function Nightdress() {
   const [nightdress, setNightdress] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/nightdress")
+    fetch("https://truhome.onrender.com/nightdress")
       .then((res) => res.json())
       .then((data) => setNightdress(data))
       .catch((err) => console.error("Error fetching pajamas:", err));

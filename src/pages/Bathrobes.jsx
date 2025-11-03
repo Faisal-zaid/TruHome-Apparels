@@ -6,7 +6,7 @@ function Bathrobes() {
   const [bathrobes, setBathrobes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/bathrobes")
+    fetch("https://truhome.onrender.com/bathrobes")
       .then((res) => res.json())
       .then((data) => setBathrobes(data))
       .catch((err) => console.error("Error fetching pajamas:", err));

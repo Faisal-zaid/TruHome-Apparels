@@ -29,7 +29,7 @@ async function handleSubmit(e) {
   };
 
   try {
-    const response = await fetch(`http://localhost:5000/${category}`, {
+    const response = await fetch(`https://truhome.onrender.com/${category}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newProduct),

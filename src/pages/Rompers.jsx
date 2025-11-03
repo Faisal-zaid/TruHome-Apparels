@@ -7,7 +7,7 @@ function Rompers() {
   const [rompers, setRompers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/rompers")
+    fetch("https://truhome.onrender.com/rompers")
       .then((res) => res.json())
       .then((data) => setRompers(data))
       .catch((err) => console.error("Error fetching pajamas:", err));
