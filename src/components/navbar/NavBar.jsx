@@ -12,7 +12,7 @@ export default function NavBar() {
     if (password === "mamaleroy") {
       setShowAdmin(true);
     } else {
-      alert("❌ Wrong password!");
+      alert("oops you aint the admin");
     }
   }
 
