@@ -6,7 +6,12 @@
       "image": "/images/pajamas1.jpg",
       "price": 1800,
       "description": "Soft cotton pajama set with button top and drawstring pants.",
-      "size": ["S", "M", "L", "XL"],
+      "size": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Sky Blue"
     },
     {
@@ -15,11 +20,21 @@
       "image": "/images/pajamas2.jpg",
       "price": 2500,
       "description": "Luxury silk pajamas for maximum comfort and style.",
-      "size": ["S", "M", "L"],
+      "size": [
+        "S",
+        "M",
+        "L"
+      ],
       "color": "Champagne"
+    },
+    {
+      "name": "kh",
+      "price": "2300",
+      "description": "nfmnffkf",
+      "image": "blob:http://localhost:5173/2088bc02-e5e0-44f2-9552-a1df61384f4b",
+      "id": 3
     }
   ],
-
   "nightdress": [
     {
       "id": 1,
@@ -27,7 +42,11 @@
       "image": "/images/nightdress1.jpg",
       "price": 2200,
       "description": "Elegant lace nightdress designed for beauty and relaxation.",
-      "size": ["S", "M", "L"],
+      "size": [
+        "S",
+        "M",
+        "L"
+      ],
       "color": "Peach"
     },
     {
@@ -36,11 +55,13 @@
       "image": "/images/nightdress2.jpg",
       "price": 2600,
       "description": "Satin sleepwear with adjustable straps and soft lining.",
-      "size": ["M", "L"],
+      "size": [
+        "M",
+        "L"
+      ],
       "color": "Emerald Green"
     }
   ],
-
   "rompers": [
     {
       "id": 1,
@@ -48,7 +69,11 @@
       "image": "/images/romper1.jpg",
       "price": 1900,
       "description": "Lightweight romper with bright floral patterns and elastic waist.",
-      "size": ["S", "M", "L"],
+      "size": [
+        "S",
+        "M",
+        "L"
+      ],
       "color": "Floral Mix"
     },
     {
@@ -57,11 +82,14 @@
       "image": "/images/romper2.jpg",
       "price": 1600,
       "description": "Perfect for lounging, breathable cotton fabric with side pockets.",
-      "size": ["M", "L", "XL"],
+      "size": [
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Light Gray"
     }
   ],
-
   "bathrobes": [
     {
       "id": 1,
@@ -69,7 +97,11 @@
       "image": "/images/bathrobe1.jpg",
       "price": 3000,
       "description": "Thick absorbent terry robe, perfect for spa or home use.",
-      "size": ["M", "L", "XL"],
+      "size": [
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "White"
     },
     {
@@ -78,7 +110,12 @@
       "image": "/images/bathrobe2.jpg",
       "price": 2800,
       "description": "Ultra-soft fleece robe with a belt and side pockets.",
-      "size": ["S", "M", "L", "XL"],
+      "size": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Pink"
     }
   ]
