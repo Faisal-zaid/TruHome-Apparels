@@ -1,7 +1,30 @@
-import React from 'react'
 
-export default function Rompers() {
+import React, { useEffect, useState } from "react";
+import image from "../photo/2.png"
+
+
+function Rompers() {
+  const [rompers, setRompers] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/rompers")
+      .then((res) => res.json())
+      .then((data) => setRompers(data))
+      .catch((err) => console.error("Error fetching pajamas:", err));
+  }, []);
+
   return (
-    <div>Rompers</div>
-  )
+    <div className="product-grid">
+      {rompers.map((item) => (
+        <div key={item.id} className="product-card">
+          <img src={image} alt={item.name} />
+          <h3>{item.name}</h3>
+          <p>{item.description}</p>
+          <span>Ksh {item.price}</span>
+        </div>
+      ))}
+    </div>
+  );
 }
+
+export default Rompers;

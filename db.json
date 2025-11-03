@@ -1,0 +1,85 @@
+{
+  "pajamas": [
+    {
+      "id": 1,
+      "name": "Classic Cotton Pajamas pp",
+      "image": "/images/pajamas1.jpg",
+      "price": 1800,
+      "description": "Soft cotton pajama set with button top and drawstring pants.",
+      "size": ["S", "M", "L", "XL"],
+      "color": "Sky Blue"
+    },
+    {
+      "id": 2,
+      "name": "Silk Pajama Set pp",
+      "image": "/images/pajamas2.jpg",
+      "price": 2500,
+      "description": "Luxury silk pajamas for maximum comfort and style.",
+      "size": ["S", "M", "L"],
+      "color": "Champagne"
+    }
+  ],
+
+  "nightdress": [
+    {
+      "id": 1,
+      "name": "Lace Trim Nightdress nn",
+      "image": "/images/nightdress1.jpg",
+      "price": 2200,
+      "description": "Elegant lace nightdress designed for beauty and relaxation.",
+      "size": ["S", "M", "L"],
+      "color": "Peach"
+    },
+    {
+      "id": 2,
+      "name": "Satin Sleep Gown nn",
+      "image": "/images/nightdress2.jpg",
+      "price": 2600,
+      "description": "Satin sleepwear with adjustable straps and soft lining.",
+      "size": ["M", "L"],
+      "color": "Emerald Green"
+    }
+  ],
+
+  "rompers": [
+    {
+      "id": 1,
+      "name": "Floral Print Romper rr",
+      "image": "/images/romper1.jpg",
+      "price": 1900,
+      "description": "Lightweight romper with bright floral patterns and elastic waist.",
+      "size": ["S", "M", "L"],
+      "color": "Floral Mix"
+    },
+    {
+      "id": 2,
+      "name": "Cotton Lounge Romper rr",
+      "image": "/images/romper2.jpg",
+      "price": 1600,
+      "description": "Perfect for lounging, breathable cotton fabric with side pockets.",
+      "size": ["M", "L", "XL"],
+      "color": "Light Gray"
+    }
+  ],
+
+  "bathrobes": [
+    {
+      "id": 1,
+      "name": "Luxury Terry Bathrobe bb",
+      "image": "/images/bathrobe1.jpg",
+      "price": 3000,
+      "description": "Thick absorbent terry robe, perfect for spa or home use.",
+      "size": ["M", "L", "XL"],
+      "color": "White"
+    },
+    {
+      "id": 2,
+      "name": "Plush Fleece Bathrobe bb",
+      "image": "/images/bathrobe2.jpg",
+      "price": 2800,
+      "description": "Ultra-soft fleece robe with a belt and side pockets.",
+      "size": ["S", "M", "L", "XL"],
+      "color": "Pink"
+    }
+  ]
+}
