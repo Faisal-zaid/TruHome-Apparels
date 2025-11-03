@@ -8,7 +8,7 @@ const [isOpen, setIsOpen] = useState(false);
 
 
   return (
-    <div>
+    <div className="main">
       <div className="shop-name">
         <div className="jina">TRUE HOME APPARELS</div>
         <div className="icons">

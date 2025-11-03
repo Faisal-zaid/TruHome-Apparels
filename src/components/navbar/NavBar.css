@@ -98,4 +98,8 @@
   .shop-name{
     gap: 30%;
   }
+
+  .main{
+    width: 90vh;
+  }
 }
