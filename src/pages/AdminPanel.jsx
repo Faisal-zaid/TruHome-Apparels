@@ -1,109 +1,112 @@
-import React, { useState } from "react";
-//import "./AdminPanel.css";
+import React, { useEffect, useState } from "react";
 
 export default function AdminPanel() {
+  const categories = ["pajamas", "nightdress", "rompers", "bathrobes"];
   const [category, setCategory] = useState("pajamas");
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    image: null
-  });
+  const [items, setItems] = useState([]);
+  const [formData, setFormData] = useState({ name: "", price: "", description: "", quantity: 1, image: null });
+  const [editingId, setEditingId] = useState(null);
+
+  useEffect(() => {
+    fetchItems();
+  }, [category]);
+
+  async function fetchItems() {
+    try {
+      const res = await fetch(`http://127.0.0.1:5000/${category}`);
+      const data = await res.json();
+      setItems(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function handleChange(e) {
     const { name, value, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: files ? files[0] : value }));
   }
 
-async function handleSubmit(e) {
-  e.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const product = {
+      name: formData.name,
+      price: formData.price,
+      description: formData.description,
+      quantity: formData.quantity,
+      image: URL.createObjectURL(formData.image)
+    };
 
-  const newProduct = {
-    name: formData.name,
-    price: formData.price,
-    description: formData.description,
-    image: URL.createObjectURL(formData.image),
-  };
+    const method = editingId ? "PATCH" : "POST";
+    const url = editingId ? `http://127.0.0.1:5000/${category}/${editingId}` : `http://127.0.0.1:5000/${category}`;
 
-  try {
-    const response = await fetch(`https://truhome.onrender.com/${category}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newProduct),
-    });
-
-    if (response.ok) {
-      alert(`✅ Product added to ${category}!`);
-      setFormData({ name: "", price: "", description: "", image: null });
-    } else {
-      alert("❌ Failed to add product");
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(product)
+      });
+      if (res.ok) {
+        alert(editingId ? "✅ Updated successfully" : "✅ Product added!");
+        setFormData({ name: "", price: "", description: "", quantity: 1, image: null });
+        setEditingId(null);
+        fetchItems();
+      } else {
+        alert("❌ Failed");
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (error) {
-    console.error("Error:", error);
   }
-}
 
+  async function handleDelete(id) {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+    try {
+      const res = await fetch(`http://127.0.0.1:5000/${category}/${id}`, { method: "DELETE" });
+      if (res.ok) fetchItems();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  function handleEdit(item) {
+    setEditingId(item.id);
+    setFormData({ name: item.name, price: item.price, description: item.description, quantity: item.quantity, image: null });
+  }
 
   return (
     <div className="admin-panel">
-      <h2>Admin Panel</h2>
+      <h2>Admin Panel - {category.toUpperCase()}</h2>
+
+      <label>
+        Category:
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+        </select>
+      </label>
 
       <form onSubmit={handleSubmit}>
-        <label>
-          Category:
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="pajamas">Pajamas</option>
-            <option value="nightdress">Nightdress</option>
-            <option value="rompers">Rompers</option>
-            <option value="bathrobes">Bathrobes</option>
-          </select>
-        </label>
-
-        <label>
-          Product Name:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </label>
-
-        <label>
-          Price (Ksh):
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
-        </label>
-
-        <label>
-          Description:
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          ></textarea>
-        </label>
-
-        <label>
-          Upload Image:
-          <input type="file" name="image" accept="image/*" onChange={handleChange} required />
-        </label>
-
-        <button type="submit">Add Product</button>
+        <input name="name" placeholder="Product Name" value={formData.name} onChange={handleChange} required />
+        <input name="price" type="number" placeholder="Price (Ksh)" value={formData.price} onChange={handleChange} required />
+        <input name="quantity" type="number" placeholder="Quantity" value={formData.quantity} onChange={handleChange} required />
+        <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
+        <input type="file" name="image" accept="image/*" onChange={handleChange} />
+        <button type="submit">{editingId ? "Update Product" : "Add Product"}</button>
       </form>
+
+      <h3>Current Items</h3>
+      <div className="product-list">
+        {items.map((item) => (
+          <div key={item.id} className="product-card">
+            <img src={item.image} alt={item.name} />
+            <h4>{item.name}</h4>
+            <p>{item.description}</p>
+            <p>Price: Ksh {item.price}</p>
+            <p>Quantity: {item.quantity}</p>
+            <button onClick={() => handleEdit(item)}>Edit</button>
+            <button onClick={() => handleDelete(item.id)}>Delete</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

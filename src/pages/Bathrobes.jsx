@@ -1,25 +1,43 @@
-
 import React, { useEffect, useState } from "react";
-import image from "../photo/1.png"
+import image from "../photo/2.png"; // Use a bathrobes default image
 
 function Bathrobes() {
   const [bathrobes, setBathrobes] = useState([]);
 
   useEffect(() => {
-    fetch("https://truhome.onrender.com/bathrobes")
-      .then((res) => res.json())
-      .then((data) => setBathrobes(data))
-      .catch((err) => console.error("Error fetching pajamas:", err));
+    fetchItems();
   }, []);
+
+  async function fetchItems() {
+    try {
+      const res = await fetch("http://127.0.0.1:5000/bathrobes");
+      const data = await res.json();
+      setBathrobes(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function handlePurchase(id) {
+    try {
+      const res = await fetch(`http://127.0.0.1:5000/purchase/bathrobes/${id}`, { method: "POST" });
+      if (res.ok) fetchItems();
+      else alert("❌ Purchase failed");
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <div className="product-grid">
       {bathrobes.map((item) => (
         <div key={item.id} className="product-card">
-          <img src={image} alt={item.name} />
+          <img src={item.image || image} alt={item.name} />
           <h3>{item.name}</h3>
           <p>{item.description}</p>
           <span>Ksh {item.price}</span>
+          <p>Qty: {item.quantity}</p>
+          {item.quantity > 0 ? <button onClick={() => handlePurchase(item.id)}>Buy</button> : <span>Out of Stock</span>}
         </div>
       ))}
     </div>
