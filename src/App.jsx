@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import NavBar from "./components/navbar/NavBar";
 import Logo from './components/logo/Logo';
@@ -15,18 +15,20 @@ function App() {
   const [showAdmin, setShowAdmin] = useState(localStorage.getItem("adminLoggedIn") === "true");
 
   return (
-    <div className="main">
-      <NavBar onAdminLogin={setShowAdmin} />
-      <Routes>
-        <Route path="/" element={<><Logo /><NewArrivals /><ContactUs /></>} />
-        <Route path="/pajamas" element={<Pajamas />} />
-        <Route path="/nightdress" element={<Nightdress />} />
-        <Route path="/rompers" element={<Rompers />} />
-        <Route path="/bathrobes" element={<Bathrobes />} />
-      </Routes>
+    <Router>
+      <div className="main">
+        <NavBar onAdminLogin={setShowAdmin} />
+        <Routes>
+          <Route path="/" element={<><Logo /><NewArrivals /><ContactUs /></>} />
+          <Route path="/pajamas" element={<Pajamas />} />
+          <Route path="/nightdress" element={<Nightdress />} />
+          <Route path="/rompers" element={<Rompers />} />
+          <Route path="/bathrobes" element={<Bathrobes />} />
+        </Routes>
 
-      {showAdmin && <AdminPanel />}
-    </div>
+        {showAdmin && <AdminPanel />}
+      </div>
+    </Router>
   );
 }
 
