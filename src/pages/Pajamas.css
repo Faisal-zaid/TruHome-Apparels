@@ -1,0 +1,207 @@
+/* ===========================
+   Product Grid & Cards
+=========================== */
+
+body {
+  background-color: #111; /* dark background for store */
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+/* Grid Layout */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Product Card */
+.product-card {
+  background: #1a1a1a; /* slightly lighter than background */
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2); /* subtle gold glow */
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+}
+
+/* Product Image */
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Product Name */
+.product-card h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  color: #FFD700; /* gold text */
+}
+
+/* Product Description */
+.product-card p {
+  font-size: 14px;
+  color: #ccc;
+  margin: 5px 0;
+}
+
+/* Price */
+.product-card span {
+  display: block;
+  margin: 6px 0;
+  font-weight: bold;
+  color: #FFD700; /* gold price */
+  font-size: 16px;
+}
+
+/* Quantity */
+.product-card p:last-of-type {
+  font-size: 13px;
+  color: #aaa;
+}
+
+/* Buy Button */
+.product-card button {
+  margin-top: 8px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #FFD700; /* gold button */
+  color: #111; /* black text */
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: background 0.2s ease;
+}
+
+.product-card button:hover {
+  background-color: #e6c200;
+}
+
+/* Out of Stock */
+.product-card span:last-child {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+/* ===========================
+   Payment Modal (Mpesa)
+=========================== */
+
+.payment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.payment-box {
+  background-color: #00a859; /* Mpesa green */
+  padding: 25px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.payment-box h2 {
+  margin-bottom: 15px;
+  color: #fff;
+  font-size: 20px;
+}
+
+.payment-box p {
+  margin: 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Input */
+.payment-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+}
+
+/* Pay Button */
+.payment-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background 0.2s ease;
+}
+
+/* Pay Now Button (gold) */
+.payment-box button:first-of-type {
+  background-color: #FFD700;
+  color: #111;
+}
+
+.payment-box button:first-of-type:hover {
+  background-color: #e6c200;
+}
+
+/* Cancel Button (dark gray) */
+.payment-box button:last-of-type {
+  background-color: #333;
+  color: #fff;
+  margin-top: 5px;
+}
+
+.payment-box button:last-of-type:hover {
+  background-color: #555;
+}
+
+/* ===========================
+   Responsive Layout
+=========================== */
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small phone */
+@media (max-width: 450px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}

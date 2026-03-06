@@ -10,7 +10,7 @@ function Rompers() {
 
   async function fetchItems() {
     try {
-      const res = await fetch("http://127.0.0.1:5000/rompers");
+      const res = await fetch("https://truhome-backend-5.onrender.com/rompers");
       const data = await res.json();
       setRompers(data);
     } catch (err) {
@@ -20,7 +20,7 @@ function Rompers() {
 
   async function handlePurchase(id) {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/purchase/rompers/${id}`, { method: "POST" });
+      const res = await fetch(`https://truhome-backend-5.onrender.com/purchase/rompers/${id}`, { method: "POST" });
       if (res.ok) fetchItems();
       else alert("❌ Purchase failed");
     } catch (err) {

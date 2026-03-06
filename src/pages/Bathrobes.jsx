@@ -10,7 +10,7 @@ function Bathrobes() {
 
   async function fetchItems() {
     try {
-      const res = await fetch("http://127.0.0.1:5000/bathrobes");
+      const res = await fetch("https://truhome-backend-5.onrender.com/bathrobes");
       const data = await res.json();
       setBathrobes(data);
     } catch (err) {
@@ -20,7 +20,7 @@ function Bathrobes() {
 
   async function handlePurchase(id) {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/purchase/bathrobes/${id}`, { method: "POST" });
+      const res = await fetch(`https://truhome-backend-5.onrender.com/purchase/bathrobes/${id}`, { method: "POST" });
       if (res.ok) fetchItems();
       else alert("❌ Purchase failed");
     } catch (err) {
