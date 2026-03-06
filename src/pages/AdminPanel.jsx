@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./AdminPanel.css";
 
+
 export default function AdminPanel() {
   const categories = ["pajamas", "nightdress", "rompers", "bathrobes"];
   const [category, setCategory] = useState("pajamas");
   const [items, setItems] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    quantity: 1,
-    image: null,
-  });
+  const [formData, setFormData] = useState({ name: "", price: "", description: "", quantity: 1, image: null });
   const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
@@ -20,7 +15,7 @@ export default function AdminPanel() {
 
   async function fetchItems() {
     try {
-      const res = await fetch(`https://truhome-backend-5.onrender.com/${category}`);
+      const res = await fetch(`http://127.0.0.1:5000/${category}`);
       const data = await res.json();
       setItems(data);
     } catch (error) {
@@ -35,33 +30,30 @@ export default function AdminPanel() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    const data = new FormData();
-    data.append("name", formData.name);
-    data.append("price", formData.price);
-    data.append("description", formData.description);
-    data.append("quantity", formData.quantity);
-    if (formData.image) data.append("image", formData.image);
+    const product = {
+      name: formData.name,
+      price: formData.price,
+      description: formData.description,
+      quantity: formData.quantity,
+      image: URL.createObjectURL(formData.image)
+    };
 
     const method = editingId ? "PATCH" : "POST";
-    const url = editingId
-      ? `https://truhome-backend-5.onrender.com/${category}/${editingId}`
-      : `https://truhome-backend-5.onrender.com/${category}`;
+    const url = editingId ? `http://127.0.0.1:5000/${category}/${editingId}` : `http://127.0.0.1:5000/${category}`;
 
     try {
       const res = await fetch(url, {
         method,
-        body: data, // Send FormData, not JSON
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(product)
       });
-
       if (res.ok) {
         alert(editingId ? "✅ Updated successfully" : "✅ Product added!");
         setFormData({ name: "", price: "", description: "", quantity: 1, image: null });
         setEditingId(null);
         fetchItems();
       } else {
-        const errorMsg = await res.text();
-        alert("❌ Failed: " + errorMsg);
+        alert("❌ Failed");
       }
     } catch (err) {
       console.error(err);
@@ -71,7 +63,7 @@ export default function AdminPanel() {
   async function handleDelete(id) {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
     try {
-      const res = await fetch(`https://truhome-backend-5.onrender.com/${category}/${id}`, { method: "DELETE" });
+      const res = await fetch(`http://127.0.0.1:5000/${category}/${id}`, { method: "DELETE" });
       if (res.ok) fetchItems();
     } catch (err) {
       console.error(err);
@@ -80,13 +72,7 @@ export default function AdminPanel() {
 
   function handleEdit(item) {
     setEditingId(item.id);
-    setFormData({
-      name: item.name,
-      price: item.price,
-      description: item.description,
-      quantity: item.quantity,
-      image: null,
-    });
+    setFormData({ name: item.name, price: item.price, description: item.description, quantity: item.quantity, image: null });
   }
 
   return (
@@ -96,13 +82,11 @@ export default function AdminPanel() {
       <label>
         Category:
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          {categories.map((c) => (
-            <option key={c} value={c}>{c}</option>
-          ))}
+          {categories.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
       </label>
 
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <form onSubmit={handleSubmit}>
         <input name="name" placeholder="Product Name" value={formData.name} onChange={handleChange} required />
         <input name="price" type="number" placeholder="Price (Ksh)" value={formData.price} onChange={handleChange} required />
         <input name="quantity" type="number" placeholder="Quantity" value={formData.quantity} onChange={handleChange} required />
@@ -115,7 +99,7 @@ export default function AdminPanel() {
       <div className="product-list">
         {items.map((item) => (
           <div key={item.id} className="product-card">
-            {item.image && <img src={item.image} alt={item.name} />}
+            <img src={item.image} alt={item.name} />
             <h4>{item.name}</h4>
             <p>{item.description}</p>
             <p>Price: Ksh {item.price}</p>

@@ -43,9 +43,9 @@ function Pajamas() {
         {pajamas.map((item) => (
           <div key={item.id} className="product-card">
             <img src={item.image || image} alt={item.name} />
-            <h3>{item.name}</h3>
-            <p>{item.description}</p>
-            <span>Ksh {item.price}</span>
+            <h3>name: {item.name}</h3>
+            <p>Description: {item.description}</p>
+            <span>price: Ksh {item.price}</span>
             <p>Qty: {item.quantity}</p>
 
             {item.quantity > 0 ? (
