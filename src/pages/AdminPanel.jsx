@@ -15,7 +15,7 @@ export default function AdminPanel() {
 
   async function fetchItems() {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/${category}`);
+      const res = await fetch(`https://truhome-backend-5.onrender.com/${category}`);
       const data = await res.json();
       setItems(data);
     } catch (error) {
@@ -35,11 +35,11 @@ export default function AdminPanel() {
       price: formData.price,
       description: formData.description,
       quantity: formData.quantity,
-      image: URL.createObjectURL(formData.image)
+      image: "placeholder"//URL.createObjectURL(formData.image)
     };
 
     const method = editingId ? "PATCH" : "POST";
-    const url = editingId ? `http://127.0.0.1:5000/${category}/${editingId}` : `http://127.0.0.1:5000/${category}`;
+    const url = editingId ? `https://truhome-backend-5.onrender.com/${category}/${editingId}` : `https://truhome-backend-5.onrender.com/${category}`;
 
     try {
       const res = await fetch(url, {
@@ -63,7 +63,7 @@ export default function AdminPanel() {
   async function handleDelete(id) {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
     try {
-      const res = await fetch(`http://127.0.0.1:5000/${category}/${id}`, { method: "DELETE" });
+      const res = await fetch(`https://truhome-backend-5.onrender.com/${category}/${id}`, { method: "DELETE" });
       if (res.ok) fetchItems();
     } catch (err) {
       console.error(err);
