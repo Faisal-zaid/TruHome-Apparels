@@ -1,10 +1,10 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import NavBar from "./components/navbar/NavBar";
-import Logo from './components/logo/Logo';
-import NewArrivals from './components/newarrivals/NewArrivals';
-import ContactUs from './components/contact/ContactUs';
-import AdminPanel from './pages/AdminPanel';
+import Logo from "./components/logo/Logo";
+import NewArrivals from "./components/newarrivals/NewArrivals";
+import ContactUs from "./components/contact/ContactUs";
+import AdminPanel from "./pages/AdminPanel";
 
 import Bathrobes from './pages/Bathrobes';
 import Nightdress from './pages/Nightdress';
