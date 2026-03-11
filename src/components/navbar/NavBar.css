@@ -41,6 +41,12 @@
     gap: 15%;
 }
 
+.navs ul li a {
+  color: gold;           /* Change text to gold */
+  text-decoration: none;  /* Remove underline */
+  transition: color 0.3s ease;
+}
+
 .hamburger {
   display: none;
   flex-direction: column;
@@ -68,10 +74,18 @@
     background-color: black;
     width: 100%;
     padding: 20px;
+    
   }
+
+  .navs ul li a {
+  color: gold;           /* Change text to gold */
+  text-decoration: none;  /* Remove underline */
+  transition: color 0.3s ease;
+}
 
   .navs.active ul {
     display: flex;
+    
   }
 
   .hamburger {
