@@ -14,7 +14,7 @@ function Nightdress() {
 
   async function fetchItems() {
     try {
-      const res = await fetch("https://truhome-backend-5.onrender.com/nightdress");
+      const res = await fetch("https://truhome-backend-8.onrender.com/nightdress");
       const data = await res.json();
       setNightdress(data);
     } catch (err) {
@@ -33,8 +33,30 @@ function Nightdress() {
   }
 
   async function confirmPayment() {
-    alert(`STK Push will be sent to ${phone}`);
-    closePayment();
+    try {
+      let formattedPhone = phone;
+
+      if (phone.startsWith("07")) {
+        formattedPhone = "254" + phone.substring(1);
+      }
+
+      const res = await fetch(
+        `https://truhome-backend-8.onrender.com/purchase/nightdress/${selectedItem.id}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone: formattedPhone }),
+        }
+      );
+
+      const data = await res.json();
+      alert("Mpesa prompt sent. Enter your M-Pesa PIN.");
+      console.log(data);
+      closePayment();
+    } catch (err) {
+      console.error(err);
+      alert("Payment failed");
+    }
   }
 
   return (
@@ -47,6 +69,7 @@ function Nightdress() {
             <p>{item.description}</p>
             <span>Ksh {item.price}</span>
             <p>Qty: {item.quantity}</p>
+
             {item.quantity > 0 ? (
               <button onClick={() => openPayment(item)}>Buy</button>
             ) : (

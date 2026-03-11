@@ -14,7 +14,7 @@ function Pajamas() {
 
   async function fetchItems() {
     try {
-      const res = await fetch("https://truhome-backend-5.onrender.com/pajamas");
+      const res = await fetch("https://truhome-backend-8.onrender.com/pajamas");
       const data = await res.json();
       setPajamas(data);
     } catch (err) {
@@ -33,9 +33,38 @@ function Pajamas() {
   }
 
   async function confirmPayment() {
-    alert(`STK Push will be sent to ${phone}`);
+  try {
+    let formattedPhone = phone;
+
+    if (phone.startsWith("07")) {
+      formattedPhone = "254" + phone.substring(1);
+    }
+
+    const res = await fetch(
+      `https://truhome-backend-8.onrender.com/purchase/pajamas/${selectedItem.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          phone: formattedPhone
+        })
+      }
+    );
+
+    const data = await res.json();
+
+    alert("Mpesa prompt sent. Enter your M-Pesa PIN.");
+
+    console.log(data);
+
     closePayment();
+  } catch (err) {
+    console.error(err);
+    alert("Payment failed");
   }
+}
 
   return (
     <>
