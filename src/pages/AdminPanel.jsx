@@ -1,114 +1,294 @@
 import React, { useEffect, useState } from "react";
 import "./AdminPanel.css";
 
-
 export default function AdminPanel() {
+
+  const loggedIn = localStorage.getItem("adminLoggedIn");
+
+  if (!loggedIn) {
+    return <h2>Access Denied</h2>;
+  }
+
   const categories = ["pajamas", "nightdress", "rompers", "bathrobes"];
+
   const [category, setCategory] = useState("pajamas");
   const [items, setItems] = useState([]);
-  const [formData, setFormData] = useState({ name: "", price: "", description: "", quantity: 1, image: null });
+
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    description: "",
+    quantity: 1,
+    image: null
+  });
+
   const [editingId, setEditingId] = useState(null);
+
+  const token = localStorage.getItem("token");
+
 
   useEffect(() => {
     fetchItems();
   }, [category]);
 
+
   async function fetchItems() {
+
     try {
-      const res = await fetch(`https://truhome-backend-8.onrender.com/${category}`);
+
+      const res = await fetch(
+        `https://truhome-backend-8.onrender.com/${category}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
       const data = await res.json();
       setItems(data);
+
     } catch (error) {
-      console.error(error);
+      console.error("Fetch error:", error);
     }
   }
 
+
   function handleChange(e) {
+
     const { name, value, files } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: files ? files[0] : value }));
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: files ? files[0] : value
+    }));
   }
 
+
   async function handleSubmit(e) {
+
     e.preventDefault();
+
     const product = {
       name: formData.name,
       price: formData.price,
       description: formData.description,
       quantity: formData.quantity,
-      image: "placeholder"//URL.createObjectURL(formData.image)
+      image: "placeholder"
     };
 
     const method = editingId ? "PATCH" : "POST";
-    const url = editingId ? `https://truhome-backend-8.onrender.com/${category}/${editingId}` : `https://truhome-backend-8.onrender.com/${category}`;
+
+    const url = editingId
+      ? `https://truhome-backend-8.onrender.com/${category}/${editingId}`
+      : `https://truhome-backend-8.onrender.com/${category}`;
+
 
     try {
+
       const res = await fetch(url, {
         method,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(product)
       });
+
       if (res.ok) {
+
         alert(editingId ? "✅ Updated successfully" : "✅ Product added!");
-        setFormData({ name: "", price: "", description: "", quantity: 1, image: null });
+
+        setFormData({
+          name: "",
+          price: "",
+          description: "",
+          quantity: 1,
+          image: null
+        });
+
         setEditingId(null);
+
         fetchItems();
+
       } else {
-        alert("❌ Failed");
+
+        const err = await res.json();
+        alert(err.message || "❌ Failed");
+
       }
-    } catch (err) {
-      console.error(err);
+
+    } catch (error) {
+
+      console.error("Submit error:", error);
+
     }
   }
+
 
   async function handleDelete(id) {
+
     if (!window.confirm("Are you sure you want to delete this item?")) return;
+
     try {
-      const res = await fetch(`https://truhome-backend-8.onrender.com/${category}/${id}`, { method: "DELETE" });
+
+      const res = await fetch(
+        `https://truhome-backend-8.onrender.com/${category}/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
       if (res.ok) fetchItems();
-    } catch (err) {
-      console.error(err);
+
+    } catch (error) {
+
+      console.error("Delete error:", error);
+
     }
   }
 
+
   function handleEdit(item) {
+
     setEditingId(item.id);
-    setFormData({ name: item.name, price: item.price, description: item.description, quantity: item.quantity, image: null });
+
+    setFormData({
+      name: item.name,
+      price: item.price,
+      description: item.description,
+      quantity: item.quantity,
+      image: null
+    });
   }
 
+
+  function logout() {
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("adminLoggedIn");
+
+    alert("Logged out");
+
+    window.location.reload();
+  }
+
+
   return (
+
     <div className="admin-panel">
-      <h2>Admin Panel - {category.toUpperCase()}</h2>
+
+      <div className="admin-header">
+
+        <h2>Admin Panel - {category.toUpperCase()}</h2>
+
+        <button onClick={logout}>Logout</button>
+
+      </div>
+
 
       <label>
+
         Category:
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+
+          {categories.map((c) => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+
         </select>
+
       </label>
 
+
       <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Product Name" value={formData.name} onChange={handleChange} required />
-        <input name="price" type="number" placeholder="Price (Ksh)" value={formData.price} onChange={handleChange} required />
-        <input name="quantity" type="number" placeholder="Quantity" value={formData.quantity} onChange={handleChange} required />
-        <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
-        <input type="file" name="image" accept="image/*" onChange={handleChange} />
-        <button type="submit">{editingId ? "Update Product" : "Add Product"}</button>
+
+        <input
+          name="name"
+          placeholder="Product Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          name="price"
+          type="number"
+          placeholder="Price (Ksh)"
+          value={formData.price}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          name="quantity"
+          type="number"
+          placeholder="Quantity"
+          value={formData.quantity}
+          onChange={handleChange}
+          required
+        />
+
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={formData.description}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="file"
+          name="image"
+          accept="image/*"
+          onChange={handleChange}
+        />
+
+        <button type="submit">
+          {editingId ? "Update Product" : "Add Product"}
+        </button>
+
       </form>
 
+
       <h3>Current Items</h3>
+
+
       <div className="product-list">
+
         {items.map((item) => (
+
           <div key={item.id} className="product-card">
+
             <img src={item.image} alt={item.name} />
+
             <h4>{item.name}</h4>
+
             <p>{item.description}</p>
+
             <p>Price: Ksh {item.price}</p>
+
             <p>Quantity: {item.quantity}</p>
+
             <button onClick={() => handleEdit(item)}>Edit</button>
+
             <button onClick={() => handleDelete(item.id)}>Delete</button>
+
           </div>
+
         ))}
+
       </div>
+
     </div>
+
   );
+
 }
