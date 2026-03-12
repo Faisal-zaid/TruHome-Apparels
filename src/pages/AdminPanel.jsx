@@ -4,6 +4,7 @@ import "./AdminPanel.css";
 export default function AdminPanel() {
 
   const loggedIn = localStorage.getItem("adminLoggedIn");
+  const [pendingAdmins, setPendingAdmins] = useState([]);
 
   if (!loggedIn) {
     return <h2>Access Denied</h2>;
@@ -52,6 +53,24 @@ export default function AdminPanel() {
       console.error("Fetch error:", error);
     }
   }
+
+  async function fetchPendingAdmins() {
+  try {
+    const res = await fetch("https://truhome-backend-8.onrender.com/admin/pending", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setPendingAdmins(data);
+    } else {
+      console.error("Failed to fetch pending admins");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 
   function handleChange(e) {
@@ -176,6 +195,33 @@ export default function AdminPanel() {
     window.location.reload();
   }
 
+  useEffect(() => {
+  fetchItems();
+  fetchPendingAdmins(); // fetch pending admins
+}, [category]);
+
+async function approveAdmin(id) {
+  if (!window.confirm("Approve this admin?")) return;
+
+  try {
+    const res = await fetch(`https://truhome-backend-8.onrender.com/admin/approve/${id}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    if (res.ok) {
+      alert("Admin approved!");
+      fetchPendingAdmins(); // refresh the list
+    } else {
+      const err = await res.json();
+      alert(err.message || "Failed to approve");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
   return (
 
@@ -259,6 +305,20 @@ export default function AdminPanel() {
 
 
       <h3>Current Items</h3>
+
+      <h3>Pending Admins</h3>
+{pendingAdmins.length === 0 ? (
+  <p>No pending admins</p>
+) : (
+  <div className="pending-admins">
+    {pendingAdmins.map((a) => (
+      <div key={a.id} className="admin-card">
+        <p>{a.name} - {a.email}</p>
+        <button onClick={() => approveAdmin(a.id)}>Approve</button>
+      </div>
+    ))}
+  </div>
+)}
 
 
       <div className="product-list">
