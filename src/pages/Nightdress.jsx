@@ -50,6 +50,19 @@ function Nightdress() {
       );
 
       const data = await res.json();
+      if (!res.ok) {
+      alert(data.message || "Payment failed");
+      return;
+    }
+
+    // ✅ Optimistically update frontend quantity
+    setNightdress(prev =>
+      prev.map(item =>
+        item.id === selectedItem.id
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
       alert("Mpesa prompt sent. Enter your M-Pesa PIN.");
       console.log(data);
       closePayment();
