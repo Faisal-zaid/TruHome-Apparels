@@ -85,65 +85,71 @@ export default function AdminPanel() {
 
 
   async function handleSubmit(e) {
+  e.preventDefault();
 
-    e.preventDefault();
+  try {
+    let imagePath = null;
+
+    if (formData.image) {
+      const formDataObj = new FormData();
+      formDataObj.append("image", formData.image);
+
+      const uploadRes = await fetch(
+        `https://truhome-backend-8.onrender.com/pajamas/upload`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formDataObj
+        }
+      );
+
+      const uploadData = await uploadRes.json();
+
+      if (!uploadRes.ok) {
+        alert(uploadData.message || "Image upload failed");
+        return;
+      }
+
+      imagePath = uploadData.image_path;
+    }
 
     const product = {
       name: formData.name,
       price: formData.price,
       description: formData.description,
       quantity: formData.quantity,
-      image: "placeholder"
+      image: imagePath
     };
 
     const method = editingId ? "PATCH" : "POST";
-
     const url = editingId
       ? `https://truhome-backend-8.onrender.com/${category}/${editingId}`
       : `https://truhome-backend-8.onrender.com/${category}`;
 
+    const res = await fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(product)
+    });
 
-    try {
-
-      const res = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(product)
-      });
-
-      if (res.ok) {
-
-        alert(editingId ? "✅ Updated successfully" : "✅ Product added!");
-
-        setFormData({
-          name: "",
-          price: "",
-          description: "",
-          quantity: 1,
-          image: null
-        });
-
-        setEditingId(null);
-
-        fetchItems();
-
-      } else {
-
-        const err = await res.json();
-        alert(err.message || "❌ Failed");
-
-      }
-
-    } catch (error) {
-
-      console.error("Submit error:", error);
-
+    if (res.ok) {
+      alert(editingId ? "✅ Updated successfully" : "✅ Product added!");
+      setFormData({ name: "", price: "", description: "", quantity: 1, image: null });
+      setEditingId(null);
+      fetchItems();
+    } else {
+      const err = await res.json();
+      alert(err.message || "❌ Failed");
     }
+  } catch (error) {
+    console.error("Submit error:", error);
   }
-
+}
 
   async function handleDelete(id) {
 
