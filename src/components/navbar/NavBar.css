@@ -114,5 +114,20 @@
     font-size: 0.9rem;
   }
 
+ .icons {
+    display: flex;           /* ensure flex layout */
+    flex-direction: row;     /* keep them in a row */
+    gap: 10px;               /* spacing between icons */
+    justify-content: flex-start;
+    align-items: center;     /* vertically center the icons */
+    width: 100%;             /* take full width */
+    flex-wrap: wrap;         /* wrap if needed */
+  }
+
+  .icons svg {
+    width: 24px;             /* ensure visible size */
+    height: 24px;
+  }
+
   
 }
