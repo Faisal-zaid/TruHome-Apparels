@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-//import "./FeaturedItems.css";
+import { Link } from "react-router-dom";
+//import "./NewArrivals.css";
 
-export default function FeaturedItems() {
+export default function NewArrivals() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -21,9 +22,9 @@ export default function FeaturedItems() {
 
       const data = await Promise.all(responses.map(res => res.json()));
 
-      // Flatten and sort by highest price
+      // Flatten and sort by newest
       const combined = data.flat();
-      combined.sort((a, b) => b.price - a.price);
+      combined.sort((a, b) => b.id - a.id);
 
       // Take top 6
       setItems(combined.slice(0, 6));
@@ -33,15 +34,21 @@ export default function FeaturedItems() {
   }
 
   return (
-    <div className="featured">
-      <h2>Featured Items</h2>
+    <div className="arrivals">
+      <h2>New Arrivals</h2>
       <div className="product-grid">
         {items.map(item => (
-          <div key={item.id} className="product-card">
-            <img src={item.image} alt={item.name} />
-            <h4>{item.name}</h4>
-            <p>Ksh {item.price}</p>
-          </div>
+          <Link 
+            to={`/category/${item.category}`} 
+            key={item.id} 
+            className="product-card-link"
+          >
+            <div className="product-card">
+              <img src={item.image} alt={item.name} />
+              <h4>{item.name}</h4>
+              <p>Ksh {item.price}</p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
