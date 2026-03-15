@@ -77,7 +77,10 @@ function Nightdress() {
       <div className="product-grid">
         {nightdress.map((item) => (
           <div key={item.id} className="product-card">
-            <img src={item.image || image} alt={item.name} />
+             <img
+                    src={item.image ? `https://truhome-backend-8.onrender.com${item.image}` : image}
+                    alt={item.name}
+                  />
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <span>Ksh {item.price}</span>

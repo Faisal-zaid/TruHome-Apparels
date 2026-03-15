@@ -85,7 +85,10 @@ function Pajamas() {
       <div className="product-grid">
         {pajamas.map((item) => (
           <div key={item.id} className="product-card">
-            <img src={item.image || image} alt={item.name} />
+             <img
+        src={item.image ? `https://truhome-backend-8.onrender.com${item.image}` : image}
+        alt={item.name}
+      />
             <h3>name: {item.name}</h3>
             <p>Description: {item.description}</p>
             <span>price: Ksh {item.price}</span>
