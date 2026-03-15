@@ -87,12 +87,21 @@ export default function AdminPanel() {
   async function handleSubmit(e) {
   e.preventDefault();
 
+    if (!token) {
+  alert("You are not logged in. Please log in again.");
+  return;
+}
+
+
+
   try {
     let imagePath = null;
 
     if (formData.image) {
       const formDataObj = new FormData();
       formDataObj.append("image", formData.image);
+
+      
 
       const uploadRes = await fetch(
         `https://truhome-backend-8.onrender.com/pajamas/upload`,
@@ -149,6 +158,7 @@ export default function AdminPanel() {
   } catch (error) {
     console.error("Submit error:", error);
   }
+
 }
 
   async function handleDelete(id) {
