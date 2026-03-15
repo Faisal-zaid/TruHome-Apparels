@@ -4,15 +4,14 @@ import "./AdminPanel.css";
 export default function AdminPanel() {
 
   const loggedIn = localStorage.getItem("adminLoggedIn");
+  const token = localStorage.getItem("token");
+
   const [pendingAdmins, setPendingAdmins] = useState([]);
 
-  if (!loggedIn) {
-    return <h2>Access Denied</h2>;
-  }
+  const [categories, setCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState("");
 
-  const categories = ["pajamas", "nightdress", "rompers", "bathrobes"];
-
-  const [category, setCategory] = useState("pajamas");
+  const [category, setCategory] = useState("");
   const [items, setItems] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -25,20 +24,63 @@ export default function AdminPanel() {
 
   const [editingId, setEditingId] = useState(null);
 
-  const token = localStorage.getItem("token");
+  if (!loggedIn) {
+    return <h2>Access Denied</h2>;
+  }
 
+  // FETCH CATEGORIES
+  async function fetchCategories() {
+    try {
+      const res = await fetch("https://truhome-backend-8.onrender.com/categories");
 
-  useEffect(() => {
-    fetchItems();
-  }, [category]);
+      const data = await res.json();
 
+      setCategories(data);
 
+      if (data.length > 0 && !category) {
+        setCategory(data[0].name);
+      }
+
+    } catch (error) {
+      console.error("Category fetch error:", error);
+    }
+  }
+
+  // CREATE CATEGORY
+  async function createCategory() {
+
+    if (!newCategory.trim()) return;
+
+    try {
+
+      const res = await fetch("https://truhome-backend-8.onrender.com/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ name: newCategory })
+      });
+
+      if (res.ok) {
+        setNewCategory("");
+        fetchCategories();
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // FETCH PRODUCTS
   async function fetchItems() {
+
+    if (!category) return;
 
     try {
 
       const res = await fetch(
-        `https://truhome-backend-8.onrender.com/${category}`,
+        `https://truhome-backend-8.onrender.com/products/${category}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -47,6 +89,7 @@ export default function AdminPanel() {
       );
 
       const data = await res.json();
+
       setItems(data);
 
     } catch (error) {
@@ -54,121 +97,133 @@ export default function AdminPanel() {
     }
   }
 
+  // FETCH ADMINS
   async function fetchPendingAdmins() {
-  try {
-    const res = await fetch("https://truhome-backend-8.onrender.com/admin/pending", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    if (res.ok) {
-      const data = await res.json();
-      setPendingAdmins(data);
-    } else {
-      console.error("Failed to fetch pending admins");
-    }
-  } catch (err) {
-    console.error(err);
-  }
-}
 
+    try {
+
+      const res = await fetch(
+        "https://truhome-backend-8.onrender.com/admin/pending",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      if (res.ok) {
+
+        const data = await res.json();
+        setPendingAdmins(data);
+
+      }
+
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchCategories();
+    fetchPendingAdmins();
+  }, []);
+
+  useEffect(() => {
+    fetchItems();
+  }, [category]);
 
   function handleChange(e) {
 
     const { name, value, files } = e.target;
 
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: files ? files[0] : value
     }));
   }
 
-
   async function handleSubmit(e) {
-  e.preventDefault();
 
-    if (!token) {
-  alert("You are not logged in. Please log in again.");
-  return;
-}
+    e.preventDefault();
 
+    try {
 
+      let imagePath = null;
 
-  try {
-    let imagePath = null;
+      if (formData.image) {
 
-    if (formData.image) {
-      const formDataObj = new FormData();
-      formDataObj.append("image", formData.image);
+        const imgData = new FormData();
+        imgData.append("image", formData.image);
 
-      
+        const uploadRes = await fetch(
+          "https://truhome-backend-8.onrender.com/upload",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: imgData
+          }
+        );
 
-      const uploadRes = await fetch(
-        `https://truhome-backend-8.onrender.com/pajamas/upload`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: formDataObj
-        }
-      );
+        const uploadData = await uploadRes.json();
 
-      const uploadData = await uploadRes.json();
-
-      if (!uploadRes.ok) {
-        alert(uploadData.message || "Image upload failed");
-        return;
+        imagePath = uploadData.image_path;
       }
 
-      imagePath = uploadData.image_path;
+      const product = {
+        name: formData.name,
+        price: formData.price,
+        description: formData.description,
+        quantity: formData.quantity,
+        image: imagePath
+      };
+
+      const method = editingId ? "PATCH" : "POST";
+
+      const url = editingId
+        ? `https://truhome-backend-8.onrender.com/products/${category}/${editingId}`
+        : `https://truhome-backend-8.onrender.com/products/${category}`;
+
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(product)
+      });
+
+      if (res.ok) {
+
+        alert(editingId ? "Updated successfully" : "Product added");
+
+        setFormData({
+          name: "",
+          price: "",
+          description: "",
+          quantity: 1,
+          image: null
+        });
+
+        setEditingId(null);
+
+        fetchItems();
+      }
+
+    } catch (error) {
+      console.error(error);
     }
-
-    const product = {
-      name: formData.name,
-      price: formData.price,
-      description: formData.description,
-      quantity: formData.quantity,
-      image: imagePath
-    };
-
-    const method = editingId ? "PATCH" : "POST";
-    const url = editingId
-      ? `https://truhome-backend-8.onrender.com/${category}/${editingId}`
-      : `https://truhome-backend-8.onrender.com/${category}`;
-
-    const res = await fetch(url, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(product)
-    });
-
-    if (res.ok) {
-      alert(editingId ? "✅ Updated successfully" : "✅ Product added!");
-      setFormData({ name: "", price: "", description: "", quantity: 1, image: null });
-      setEditingId(null);
-      fetchItems();
-    } else {
-      const err = await res.json();
-      alert(err.message || "❌ Failed");
-    }
-  } catch (error) {
-    console.error("Submit error:", error);
   }
-
-}
 
   async function handleDelete(id) {
 
-    if (!window.confirm("Are you sure you want to delete this item?")) return;
+    if (!window.confirm("Delete this item?")) return;
 
     try {
 
       const res = await fetch(
-        `https://truhome-backend-8.onrender.com/${category}/${id}`,
+        `https://truhome-backend-8.onrender.com/products/${category}/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -180,12 +235,9 @@ export default function AdminPanel() {
       if (res.ok) fetchItems();
 
     } catch (error) {
-
-      console.error("Delete error:", error);
-
+      console.error(error);
     }
   }
-
 
   function handleEdit(item) {
 
@@ -200,57 +252,64 @@ export default function AdminPanel() {
     });
   }
 
-
   function logout() {
 
     localStorage.removeItem("token");
     localStorage.removeItem("adminLoggedIn");
 
-    alert("Logged out");
-
     window.location.reload();
   }
 
-  useEffect(() => {
-  fetchItems();
-  fetchPendingAdmins(); // fetch pending admins
-}, [category]);
+  async function approveAdmin(id) {
 
-async function approveAdmin(id) {
-  if (!window.confirm("Approve this admin?")) return;
+    if (!window.confirm("Approve admin?")) return;
 
-  try {
-    const res = await fetch(`https://truhome-backend-8.onrender.com/admin/approve/${id}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`
+    try {
+
+      const res = await fetch(
+        `https://truhome-backend-8.onrender.com/admin/approve/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      if (res.ok) {
+
+        alert("Admin approved");
+
+        fetchPendingAdmins();
       }
-    });
-    if (res.ok) {
-      alert("Admin approved!");
-      fetchPendingAdmins(); // refresh the list
-    } else {
-      const err = await res.json();
-      alert(err.message || "Failed to approve");
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
 
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
 
     <div className="admin-panel">
 
       <div className="admin-header">
-
-        <h2>Admin Panel - {category.toUpperCase()}</h2>
-
+        <h2>Admin Panel</h2>
         <button onClick={logout}>Logout</button>
-
       </div>
 
+      <h3>Create Category</h3>
+
+      <input
+        placeholder="Category name"
+        value={newCategory}
+        onChange={(e) => setNewCategory(e.target.value)}
+      />
+
+      <button onClick={createCategory}>
+        Add Category
+      </button>
+
+      <br /><br />
 
       <label>
 
@@ -261,14 +320,15 @@ async function approveAdmin(id) {
           onChange={(e) => setCategory(e.target.value)}
         >
 
-          {categories.map((c) => (
-            <option key={c} value={c}>{c}</option>
+          {categories.map(c => (
+            <option key={c.id} value={c.name}>
+              {c.name}
+            </option>
           ))}
 
         </select>
 
       </label>
-
 
       <form onSubmit={handleSubmit}>
 
@@ -283,7 +343,7 @@ async function approveAdmin(id) {
         <input
           name="price"
           type="number"
-          placeholder="Price (Ksh)"
+          placeholder="Price"
           value={formData.price}
           onChange={handleChange}
           required
@@ -303,7 +363,6 @@ async function approveAdmin(id) {
           placeholder="Description"
           value={formData.description}
           onChange={handleChange}
-          required
         />
 
         <input
@@ -319,27 +378,27 @@ async function approveAdmin(id) {
 
       </form>
 
-
-      <h3>Current Items</h3>
-
       <h3>Pending Admins</h3>
-{pendingAdmins.length === 0 ? (
-  <p>No pending admins</p>
-) : (
-  <div className="pending-admins">
-    {pendingAdmins.map((a) => (
-      <div key={a.id} className="admin-card">
-        <p>{a.name} - {a.email}</p>
-        <button onClick={() => approveAdmin(a.id)}>Approve</button>
-      </div>
-    ))}
-  </div>
-)}
 
+      {pendingAdmins.map(a => (
+
+        <div key={a.id}>
+
+          <p>{a.name} - {a.email}</p>
+
+          <button onClick={() => approveAdmin(a.id)}>
+            Approve
+          </button>
+
+        </div>
+
+      ))}
+
+      <h3>Products</h3>
 
       <div className="product-list">
 
-        {items.map((item) => (
+        {items.map(item => (
 
           <div key={item.id} className="product-card">
 
@@ -349,13 +408,17 @@ async function approveAdmin(id) {
 
             <p>{item.description}</p>
 
-            <p>Price: Ksh {item.price}</p>
+            <p>Ksh {item.price}</p>
 
-            <p>Quantity: {item.quantity}</p>
+            <p>Qty: {item.quantity}</p>
 
-            <button onClick={() => handleEdit(item)}>Edit</button>
+            <button onClick={() => handleEdit(item)}>
+              Edit
+            </button>
 
-            <button onClick={() => handleDelete(item.id)}>Delete</button>
+            <button onClick={() => handleDelete(item.id)}>
+              Delete
+            </button>
 
           </div>
 

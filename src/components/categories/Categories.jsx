@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import "./Categories.css";
 
 export default function Categories(){
 
   const navigate = useNavigate();
 
-  const categories = [
-    "pajamas",
-    "nightdress",
-    "rompers",
-    "bathrobes"
-  ];
+  const [categories,setCategories] = useState([]);
+
+  useEffect(()=>{
+    fetchCategories();
+  },[])
+
+  async function fetchCategories(){
+
+    try{
+
+      const res = await fetch(
+        "https://truhome-backend-8.onrender.com/categories"
+      )
+
+      const data = await res.json()
+
+      setCategories(data)
+
+    }catch(err){
+
+      console.error(err)
+
+    }
+
+  }
 
   return(
 
@@ -24,10 +42,12 @@ export default function Categories(){
         {categories.map(cat => (
 
           <button
-            key={cat}
-            onClick={()=>navigate(`/${cat}`)}
+            key={cat.id}
+            onClick={()=>navigate(`/${cat.name}`)}
           >
-            {cat.toUpperCase()}
+
+            {cat.name.toUpperCase()}
+
           </button>
 
         ))}

@@ -9,10 +9,12 @@ import NewArrivals from "./components/newarrivals/NewArrivals";
 import ContactUs from "./components/contact/ContactUs";
 
 import AdminPanel from "./pages/AdminPanel";
-import Bathrobes from "./pages/Bathrobes";
-import Nightdress from "./pages/Nightdress";
-import Pajamas from "./pages/Pajamas";
-import Rompers from "./pages/Rompers";
+//import Bathrobes from "./pages/Bathrobes";
+//import Nightdress from "./pages/Nightdress";
+//import Pajamas from "./pages/Pajamas";
+//import Rompers from "./pages/Rompers";
+
+import ProductsPage from "./pages/ProductsPage"; // 
 
 function App() {
   const [showAdmin, setShowAdmin] = useState(
@@ -38,10 +40,7 @@ function App() {
             }
           />
 
-          <Route path="/pajamas" element={<Pajamas />} />
-          <Route path="/nightdress" element={<Nightdress />} />
-          <Route path="/rompers" element={<Rompers />} />
-          <Route path="/bathrobes" element={<Bathrobes />} />
+          <Route path="/:category" element={<ProductsPage />} />
         </Routes>
 
         {showAdmin && <AdminPanel />}

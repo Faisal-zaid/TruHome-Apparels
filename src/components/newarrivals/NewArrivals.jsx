@@ -1,58 +1,49 @@
 import React, { useEffect, useState } from "react";
 import "./NewArrivals.css";
 
-export default function NewArrivals(){
+export default function NewArrivals() {
+  const [items, setItems] = useState([]);
 
-  const [items,setItems] = useState([]);
-
-  useEffect(()=>{
+  useEffect(() => {
     loadItems();
-  },[]);
+  }, []);
 
-  async function loadItems(){
+  async function loadItems() {
+    try {
+      // 1. Fetch categories dynamically
+      const catRes = await fetch("https://truhome-backend-8.onrender.com/categories");
+      const categories = await catRes.json();
 
-    const urls = [
-      "https://truhome-backend-8.onrender.com/pajamas",
-      "https://truhome-backend-8.onrender.com/nightdress",
-      "https://truhome-backend-8.onrender.com/rompers",
-      "https://truhome-backend-8.onrender.com/bathrobes"
-    ];
+      // 2. Fetch products for all categories
+      const responses = await Promise.all(
+        categories.map(cat => fetch(`https://truhome-backend-8.onrender.com/products/${cat.name}`))
+      );
 
-    const responses = await Promise.all(urls.map(url=>fetch(url)));
-    const data = await Promise.all(responses.map(res=>res.json()));
+      const data = await Promise.all(responses.map(res => res.json()));
 
-    const combined = data.flat();
+      // 3. Flatten and sort by newest
+      const combined = data.flat();
+      combined.sort((a, b) => b.id - a.id);
 
-    combined.sort((a,b)=>b.id-a.id);
-
-    setItems(combined.slice(0,6));
-
+      // 4. Take top 6
+      setItems(combined.slice(0, 6));
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  return(
-
+  return (
     <div className="arrivals">
-
       <h2>New Arrivals</h2>
-
       <div className="product-grid">
-
         {items.map(item => (
-
           <div key={item.id} className="product-card">
-
-            <img src={item.image} alt={item.name}/>
+            <img src={item.image} alt={item.name} />
             <h4>{item.name}</h4>
             <p>Ksh {item.price}</p>
-
           </div>
-
         ))}
-
       </div>
-
     </div>
-
-  )
-
+  );
 }
