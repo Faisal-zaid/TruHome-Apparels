@@ -35,36 +35,38 @@ function Nightdress() {
   async function confirmPayment() {
     try {
       let formattedPhone = phone;
-
       if (phone.startsWith("07")) {
         formattedPhone = "254" + phone.substring(1);
       }
 
+      const token = localStorage.getItem("token");
       const res = await fetch(
         `https://truhome-backend-8.onrender.com/purchase/nightdress/${selectedItem.id}`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ phone: formattedPhone }),
         }
       );
 
       const data = await res.json();
       if (!res.ok) {
-      alert(data.message || "Payment failed");
-      return;
-    }
+        alert(data.message || "Payment failed");
+        return;
+      }
 
-    // ✅ Optimistically update frontend quantity
-    setNightdress(prev =>
-      prev.map(item =>
-        item.id === selectedItem.id
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
+      setNightdress(prev =>
+        prev.map(item =>
+          item.id === selectedItem.id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+      );
+
       alert("Mpesa prompt sent. Enter your M-Pesa PIN.");
-      console.log(data);
       closePayment();
     } catch (err) {
       console.error(err);
@@ -77,15 +79,11 @@ function Nightdress() {
       <div className="product-grid">
         {nightdress.map((item) => (
           <div key={item.id} className="product-card">
-             <img
-                    src={item.image ? `https://truhome-backend-8.onrender.com${item.image}` : image}
-                    alt={item.name}
-                  />
+            <img src={item.image || image} alt={item.name} />
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <span>Ksh {item.price}</span>
             <p>Qty: {item.quantity}</p>
-
             {item.quantity > 0 ? (
               <button onClick={() => openPayment(item)}>Buy</button>
             ) : (
