@@ -40,18 +40,18 @@ function Pajamas() {
       formattedPhone = "254" + phone.substring(1);
     }
 
-    const res = await fetch(
-      `https://truhome-backend-8.onrender.com/purchase/pajamas/${selectedItem.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          phone: formattedPhone
-        })
-      }
-    );
+   const token = localStorage.getItem("token");
+const res = await fetch(
+  `https://truhome-backend-8.onrender.com/purchase/pajamas/${selectedItem.id}`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,  // add this
+    },
+    body: JSON.stringify({ phone: formattedPhone }),
+  }
+);
 
     const data = await res.json();
 
