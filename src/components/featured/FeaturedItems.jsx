@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./FeaturedItems.css";
+//import "./FeaturedItems.css";
 
 export default function FeaturedItems() {
 
