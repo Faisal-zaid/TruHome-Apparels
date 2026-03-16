@@ -13,9 +13,26 @@ function ProductsPage() {
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
-    fetchItems();
-  }, [category]);
 
+  fetchItems();
+
+  const hash = window.location.hash;
+
+  if (hash) {
+
+    setTimeout(() => {
+
+      const element = document.querySelector(hash);
+
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+
+    }, 500);
+
+  }
+
+}, [category]);
   async function fetchItems() {
 
     try {
@@ -107,7 +124,7 @@ function ProductsPage() {
 
         {items.map((item) => (
 
-          <div key={item.id} className="product-card">
+          <div key={item.id} id={`product-${item.id}`} className="product-card">
 
             <img src={item.image || image} alt={item.name} />
 

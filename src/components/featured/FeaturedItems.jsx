@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-//import "./NewArrivals.css";
+import { useNavigate } from "react-router-dom";
 
-export default function NewArrivals() {
+export default function FeaturedItems() {
+
   const [items, setItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadItems();
@@ -11,46 +12,68 @@ export default function NewArrivals() {
 
   async function loadItems() {
     try {
-      // Fetch categories dynamically
+
       const catRes = await fetch("https://truhome-backend-8.onrender.com/categories");
       const categories = await catRes.json();
 
-      // Fetch products for all categories
       const responses = await Promise.all(
-        categories.map(cat => fetch(`https://truhome-backend-8.onrender.com/products/${cat.name}`))
+        categories.map(cat =>
+          fetch(`https://truhome-backend-8.onrender.com/products/${cat.name}`)
+        )
       );
 
       const data = await Promise.all(responses.map(res => res.json()));
 
-      // Flatten and sort by newest
-      const combined = data.flat();
-      combined.sort((a, b) => b.id - a.id);
+      // attach category name to each product
+      const combined = data.flat().map((item, index) => {
+        const catIndex = Math.floor(index / (data[0]?.length || 1));
+        return {
+          ...item,
+          category: categories[catIndex]?.name
+        };
+      });
 
-      // Take top 6
+      combined.sort((a, b) => b.price - a.price);
+
       setItems(combined.slice(0, 6));
+
     } catch (err) {
       console.error(err);
     }
   }
 
+  function openProduct(item) {
+    navigate(`/${item.category}#product-${item.id}`);
+  }
+
   return (
-    <div className="arrivals">
-      <h2>New Arrivals</h2>
+    <div className="featured">
+
+      <h2>Featured Items</h2>
+
       <div className="product-grid">
+
         {items.map(item => (
-          <Link 
-            to={`/category/${item.category}`} 
-            key={item.id} 
-            className="product-card-link"
+
+          <div
+            key={item.id}
+            className="product-card"
+            onClick={() => openProduct(item)}
+            style={{ cursor: "pointer" }}
           >
-            <div className="product-card">
-              <img src={item.image} alt={item.name} />
-              <h4>{item.name}</h4>
-              <p>Ksh {item.price}</p>
-            </div>
-          </Link>
+
+            <img src={item.image} alt={item.name} />
+
+            <h4>{item.name}</h4>
+
+            <p>Ksh {item.price}</p>
+
+          </div>
+
         ))}
+
       </div>
+
     </div>
   );
 }
