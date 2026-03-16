@@ -100,28 +100,31 @@ export default function AdminPanel() {
   // FETCH ADMINS
   async function fetchPendingAdmins() {
 
-    try {
+  try {
 
-      const res = await fetch(
-        "https://truhome-backend-8.onrender.com/admin/pending",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+    const res = await fetch(
+      "https://truhome-backend-8.onrender.com/admin/pending",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
-
-      if (res.ok) {
-
-        const data = await res.json();
-        setPendingAdmins(data);
-
       }
+    );
 
-    } catch (err) {
-      console.error(err);
+    const data = await res.json();
+
+    console.log("Pending admins response:", data);
+
+    if (res.ok) {
+      setPendingAdmins(data);
+    } else {
+      console.error("Error fetching pending admins:", data);
     }
+
+  } catch (err) {
+    console.error("Fetch error:", err);
   }
+}
 
   useEffect(() => {
     fetchCategories();
