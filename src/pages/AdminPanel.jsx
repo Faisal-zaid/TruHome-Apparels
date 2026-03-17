@@ -407,13 +407,13 @@ export default function AdminPanel() {
 
             <img src={item.image} alt={item.name} />
 
-            <h4>{item.name}</h4>
+            <h4>Name:{item.name}</h4>
 
-            <p>{item.description}</p>
+            <p>Description:{item.description}</p>
 
-            <p>Ksh {item.price}</p>
+            <p>Price in Ksh {item.price}</p>
 
-            <p>Qty: {item.quantity}</p>
+            <p>Quantity: {item.quantity}</p>
 
             <button onClick={() => handleEdit(item)}>
               Edit
