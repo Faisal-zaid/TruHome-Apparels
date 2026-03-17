@@ -335,7 +335,7 @@ export default function AdminPanel() {
 
       <form onSubmit={handleSubmit}>
 
-        <h2>Product Name</h2><input
+        <h4>Product Name</h4><input
           name="name"
           placeholder="Product Name"
           value={formData.name}
@@ -343,7 +343,7 @@ export default function AdminPanel() {
           required
         />
 
-        <h2>Price </h2><input
+        <h4>Price </h4><input
           name="price"
           type="number"
           placeholder="Price"
@@ -352,7 +352,7 @@ export default function AdminPanel() {
           required
         />
 
-        <h2>Quantity</h2><input
+        <h4>Quantity</h4><input
           name="quantity"
           type="number"
           placeholder="Quantity"
@@ -361,14 +361,14 @@ export default function AdminPanel() {
           required
         />
 
-        <h2>Description</h2><textarea
+        <h4>Description</h4><textarea
           name="description"
           placeholder="Description"
           value={formData.description}
           onChange={handleChange}
         />
 
-        <h2>image</h2><input
+        <h4>image</h4><input
           type="file"
           name="image"
           accept="image/*"
