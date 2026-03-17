@@ -139,7 +139,7 @@
   .icons svg {
     width: 24px;             /* ensure visible size */
     height: 24px;
-    display: none;
+    /* display: none; */
   }
   .jina{
     font-size: 20px;
