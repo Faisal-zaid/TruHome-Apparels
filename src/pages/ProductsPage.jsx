@@ -12,6 +12,8 @@ function ProductsPage() {
   const [phone, setPhone] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
 
   fetchItems();
@@ -35,6 +37,8 @@ function ProductsPage() {
 }, [category]);
   async function fetchItems() {
 
+    setLoading(true);
+
     try {
 
       const res = await fetch(
@@ -50,6 +54,8 @@ function ProductsPage() {
       console.error(err);
 
     }
+
+    setLoading(false);
   }
 
   function openPayment(item) {
@@ -120,6 +126,9 @@ function ProductsPage() {
 
   return (
     <>
+    {loading ? (
+  <div className="loading">Loading...</div>
+) : (
       <div className="product-grid">
 
         {items.map((item) => (
@@ -151,6 +160,7 @@ function ProductsPage() {
         ))}
 
       </div>
+      )}
 
       {showPayment && (
 

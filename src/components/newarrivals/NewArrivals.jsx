@@ -6,12 +6,14 @@ export default function NewArrivals() {
 
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadItems();
   }, []);
 
   async function loadItems() {
+    setLoading(true);
 
     try {
 
@@ -41,6 +43,7 @@ export default function NewArrivals() {
     } catch (err) {
       console.error(err);
     }
+    setLoading(false);
   }
 
   function openProduct(item) {
@@ -51,6 +54,10 @@ export default function NewArrivals() {
     <div className="arrivals">
 
       <h2>New Arrivals</h2>
+
+      {loading ? (
+  <div className="loading">Loading...</div>
+) : (
 
       <div className="product-grid">
 
@@ -74,6 +81,7 @@ export default function NewArrivals() {
         ))}
 
       </div>
+      )}
 
     </div>
   );

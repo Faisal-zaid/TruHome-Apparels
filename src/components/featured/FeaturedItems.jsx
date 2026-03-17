@@ -6,12 +6,14 @@ export default function FeaturedItems() {
 
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadItems();
   }, []);
 
   async function loadItems() {
+    setLoading(true);
     try {
 
       const catRes = await fetch("https://truhome-backend-8.onrender.com/categories");
@@ -41,6 +43,7 @@ export default function FeaturedItems() {
     } catch (err) {
       console.error(err);
     }
+    setLoading(false);
   }
 
   function openProduct(item) {
@@ -51,6 +54,11 @@ export default function FeaturedItems() {
     <div className="featured">
 
       <h2>Featured Items</h2>
+
+      {loading ? (
+  <div className="loading">Loading...</div>
+) : (
+
 
       <div className="product-grid">
 
@@ -74,7 +82,9 @@ export default function FeaturedItems() {
         ))}
 
       </div>
+      )}
 
     </div>
+    
   );
 }
