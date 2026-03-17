@@ -1,5 +1,5 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import NavBar from "./components/navbar/NavBar";
 import Logo from "./components/logo/Logo";
@@ -9,12 +9,24 @@ import NewArrivals from "./components/newarrivals/NewArrivals";
 import ContactUs from "./components/contact/ContactUs";
 
 import AdminPanel from "./pages/AdminPanel";
-//import Bathrobes from "./pages/Bathrobes";
-//import Nightdress from "./pages/Nightdress";
-//import Pajamas from "./pages/Pajamas";
-//import Rompers from "./pages/Rompers";
+import ProductsPage from "./pages/ProductsPage";
 
-import ProductsPage from "./pages/ProductsPage"; // 
+function ScrollToHash() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [location]);
+
+  return null;
+}
 
 function App() {
   const [showAdmin, setShowAdmin] = useState(
@@ -23,6 +35,8 @@ function App() {
 
   return (
     <Router>
+      <ScrollToHash />
+
       <div className="main">
         <NavBar onAdminLogin={setShowAdmin} />
 

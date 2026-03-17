@@ -1,0 +1,169 @@
+/* PAGE BACKGROUND */
+body {
+  background-color: #000;
+}
+
+/* PRODUCT GRID */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 30px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  background: #111;
+  border: 1px solid gold;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  color: gold;
+  transition: 0.3s;
+  position: relative;
+}
+
+/* HOVER EFFECT */
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 12px gold;
+}
+
+/* IMAGE */
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* TITLE */
+.product-card h3 {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+/* DESCRIPTION */
+.product-card p {
+  font-size: 14px;
+  color: #ccc;
+  margin: 5px 0;
+}
+
+/* PRICE */
+.product-card span {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* BUTTON */
+.product-card button {
+  background: gold;
+  color: black;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.product-card button:hover {
+  background: white;
+}
+
+/* OUT OF STOCK */
+.product-card span:last-child {
+  color: red;
+  font-weight: bold;
+}
+
+/* PAYMENT MODAL BACKGROUND */
+.payment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* PAYMENT BOX */
+.payment-box {
+  background: #111;
+  border: 2px solid gold;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  color: gold;
+  width: 90%;
+  max-width: 350px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* TITLE */
+.payment-box h2 {
+  margin-bottom: 15px;
+}
+
+/* INPUT */
+.payment-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid gold;
+  background: black;
+  color: gold;
+  outline: none;
+}
+
+/* BUTTONS */
+.payment-box button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  background: gold;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.payment-box button:hover {
+  background: white;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 500px) {
+  .product-grid {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .product-card img {
+    height: 140px;
+  }
+
+  .payment-box {
+    padding: 20px;
+  }
+}

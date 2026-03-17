@@ -1,65 +1,89 @@
 .parent {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  padding: 2rem;
   background-color: black;
+  color: gold;
+  padding: 60px 20px;
+  text-align: center;
   border-top: 2px solid gold;
 }
 
+/* TITLE */
+.parent h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid gold;
+  display: inline-block;
+  padding-bottom: 6px;
+  letter-spacing: 1px;
+}
+
+/* ICONS CONTAINER */
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin: 25px 0;
+}
+
+/* ICON STYLE */
 .icons svg {
-  width: 25px;
-  height: 25px;
-  margin: 5px;
+  width: 32px;
+  height: 32px;
   color: gold;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+/* HOVER EFFECT */
+.icons svg:hover {
+  color: white;
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 10px gold);
+}
+
+/* ABOUT TEXT */
 .aboutus {
-  color: gold;
-  text-align: center;
-  width: 100%;
+  margin-top: 25px;
+  font-size: 15px;
+  color: #ddd;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
 }
 
+/* 📱 TABLET */
+@media (max-width: 768px) {
+  .icons {
+    gap: 20px;
+  }
 
-.icons{
-    
-    width: 100px;
+  .icons svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .parent h2 {
+    font-size: 24px;
+  }
 }
 
-.icons svg{
-    margin: 3px;
-    color: gold;
-    width: 25px;
-}
-
-.aboutus{
-    color: gold;
-}
-
-@media (max-width: 900px) {
+/* 📱 PHONE */
+@media (max-width: 500px) {
   .parent {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    padding: 40px 15px;
   }
 
   .icons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+    gap: 15px;
   }
-}
 
-/* Phones */
-@media (max-width: 600px) {
   .icons svg {
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
   }
 
   .aboutus {
-    font-size: 0.9rem;
+    font-size: 13px;
   }
 }

@@ -1,10 +1,10 @@
-.arrivals {
+.featured {
   background-color: black;
   color: gold;
   padding: 40px 20px;
 }
 
-.arrivals h2 {
+.featured h2 {
   text-align: center;
   margin-bottom: 30px;
   font-size: 28px;
@@ -13,14 +13,14 @@
   padding-bottom: 5px;
 }
 
-/* SAME GRID */
+/* GRID */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* 3 per row */
   gap: 20px;
 }
 
-/* SAME CARD STYLE */
+/* CARD */
 .product-card {
   background-color: #111;
   border: 1px solid gold;
@@ -35,6 +35,7 @@
   box-shadow: 0 0 15px gold;
 }
 
+/* IMAGE */
 .product-card img {
   width: 100%;
   height: 200px;
@@ -42,6 +43,7 @@
   border-radius: 10px;
 }
 
+/* TEXT */
 .product-card h4 {
   margin: 10px 0 5px;
   color: gold;
@@ -55,7 +57,7 @@
 /* 📱 MOBILE */
 @media (max-width: 768px) {
   .product-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2 per row */
   }
 
   .product-card img {

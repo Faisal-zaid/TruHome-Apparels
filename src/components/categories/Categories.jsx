@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Categories.css";
 
 export default function Categories(){
 
@@ -33,7 +34,7 @@ export default function Categories(){
 
   return(
 
-    <div className="categories">
+    <div id="categories" className="categories">
 
       <h2>Shop by Category</h2>
 

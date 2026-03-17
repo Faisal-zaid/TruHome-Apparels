@@ -1,102 +1,144 @@
 .admin-panel {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
+  background-color: #000;
+  color: gold;
+  padding: 30px;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
 }
 
-.admin-panel h2 {
-  text-align: center;
+/* HEADER */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid gold;
+  padding-bottom: 10px;
   margin-bottom: 20px;
 }
 
-.admin-panel select {
-  margin-left: 10px;
-  padding: 5px;
+.admin-header h2 {
+  margin: 0;
 }
 
-form {
-  display: grid;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-form input,
-form textarea,
-form select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-form textarea {
-  resize: none;
-  height: 80px;
-}
-
-form button {
-  padding: 10px;
+.admin-header button {
+  background: gold;
+  color: black;
   border: none;
-  background: #4CAF50;
-  color: white;
-  font-weight: bold;
+  padding: 8px 14px;
   cursor: pointer;
-  border-radius: 5px;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
-form button:hover {
-  background: #45a049;
+.admin-header button:hover {
+  background: white;
 }
 
+/* INPUTS + FORM */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid gold;
+  background: black;
+  color: gold;
+  outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #aaa;
+}
+
+/* BUTTONS */
+button {
+  background: gold;
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-top: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: white;
+}
+
+/* SECTION TITLES */
+h3 {
+  margin-top: 30px;
+  border-bottom: 1px solid gold;
+  padding-bottom: 5px;
+}
+
+/* PENDING ADMINS */
+.admin-panel div p {
+  margin: 5px 0;
+}
+
+/* PRODUCT LIST */
 .product-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  color: black;
+  margin-top: 20px;
 }
 
+/* PRODUCT CARD */
 .product-card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
-  background: #fff;
+  background: #111;
+  border: 1px solid gold;
+  padding: 15px;
   text-align: center;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px gold;
 }
 
 .product-card img {
   width: 100%;
-  height: 180px;
+  height: 150px;
   object-fit: cover;
-  border-radius: 5px;
+  border-bottom: 1px solid gold;
+  margin-bottom: 10px;
 }
 
+/* CARD TEXT */
 .product-card h4 {
-  margin: 10px 0 5px;
+  margin: 10px 0;
 }
 
 .product-card p {
   font-size: 14px;
+  color: #ddd;
 }
 
+/* CARD BUTTONS */
 .product-card button {
   margin: 5px;
   padding: 6px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  font-size: 12px;
 }
 
-.product-card button:first-of-type {
-  background: #2196F3;
-  color: white;
-}
+/* MOBILE */
+@media (max-width: 500px) {
+  .admin-panel {
+    padding: 15px;
+  }
 
-.product-card button:last-of-type {
-  background: #f44336;
-  color: white;
-}
+  .admin-header {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-.product-card button:hover {
-  opacity: 0.85;
+  .product-card img {
+    height: 120px;
+  }
 }

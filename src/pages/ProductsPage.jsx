@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import image from "../photo/3.png";
-import "./Pajamas.css";
+import "./ProductsPage.css";
 
 function ProductsPage() {
 

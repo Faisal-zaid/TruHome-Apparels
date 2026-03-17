@@ -28,13 +28,14 @@ export default function NavBar({ onAdminLogin }) {
         <div className="jina">TRUHOME APPARELS</div>
 
         <div className="icons">
+          
 
           {/* Shopping cart icon */}
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" d="M7 22q-.825 0-1.412-.587T5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22M6.15 6l2.4 5h7l2.75-5z"/>
           </svg>
 
-          {/* Admin icon */}
+          {/* Admin icon*/} 
           <svg
             onClick={handleAdminClick}
             xmlns="http://www.w3.org/2000/svg"
@@ -74,12 +75,24 @@ export default function NavBar({ onAdminLogin }) {
       {/* Navigation links */}
       <nav className={`navs ${isOpen ? "active" : ""}`}>
         <ul>
-          <li><Link to="/">HOME</Link></li>
-          <li><Link to="/pajamas">PAJAMAS</Link></li>
-          <li><Link to="/nightdress">NIGHT DRESS</Link></li>
-          <li><Link to="/rompers">ROMPERS</Link></li>
-          <li><Link to="/bathrobes">BATHROBES</Link></li>
-        </ul>
+  <li>
+    <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+      HOME
+    </Link>
+  </li>
+
+  <li>
+    <Link to="/categories">
+      SHOP
+    </Link>
+  </li>
+
+  <li>
+    <Link to="/#contact">
+      CONTACT US
+    </Link>
+  </li>
+</ul>
       </nav>
 
       {/* Admin Login Modal */}
