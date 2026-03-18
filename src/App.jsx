@@ -10,6 +10,11 @@ import ContactUs from "./components/contact/ContactUs";
 
 import AdminPanel from "./pages/AdminPanel";
 import ProductsPage from "./pages/ProductsPage";
+import CartPage from "./pages/CartPage";
+
+
+
+
 
 function ScrollToHash() {
   const location = useLocation();
@@ -55,6 +60,7 @@ function App() {
           />
 
           <Route path="/:category" element={<ProductsPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
 
         {showAdmin && <AdminPanel />}

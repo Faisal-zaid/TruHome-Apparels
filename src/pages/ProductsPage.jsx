@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 import image from "../photo/3.png";
 import "./ProductsPage.css";
 
@@ -11,6 +12,8 @@ function ProductsPage() {
   const [showPayment, setShowPayment] = useState(false);
   const [phone, setPhone] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const { addToCart } = useContext(CartContext);
 
   const [loading, setLoading] = useState(true);
 
@@ -147,7 +150,9 @@ function ProductsPage() {
 
             {item.quantity > 0 ? (
 
-              <button onClick={() => openPayment(item)}>Buy</button>
+              <button onClick={() => addToCart({ ...item, category })}>
+  Add to Cart
+</button>
 
             ) : (
 
