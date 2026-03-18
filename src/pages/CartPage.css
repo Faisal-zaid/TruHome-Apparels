@@ -1,0 +1,160 @@
+.cart-page {
+  background-color: #000;
+  color: gold;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* TITLE */
+.cart-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid gold;
+  padding-bottom: 10px;
+}
+
+/* EMPTY CART */
+.cart-page p {
+  text-align: center;
+  color: #aaa;
+}
+
+/* CART ITEMS CONTAINER */
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #111;
+  border: 1px solid gold;
+  padding: 15px;
+  margin-bottom: 15px;
+  gap: 15px;
+  flex-wrap: wrap;
+  transition: 0.3s;
+}
+
+.cart-item:hover {
+  box-shadow: 0 0 10px gold;
+}
+
+/* IMAGE */
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 1px solid gold;
+}
+
+/* TEXT */
+.cart-item h4 {
+  margin: 0;
+  flex: 1;
+}
+
+.cart-item p {
+  margin: 0;
+  color: #ddd;
+}
+
+/* QUANTITY CONTROLS */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-controls button {
+  background: gold;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.qty-controls button:hover {
+  background: white;
+}
+
+.qty-controls span {
+  min-width: 20px;
+  text-align: center;
+}
+
+/* REMOVE BUTTON */
+.cart-item button {
+  background: crimson;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cart-item button:hover {
+  background: red;
+}
+
+/* TOTAL */
+.cart-page h3 {
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px solid gold;
+  padding-top: 10px;
+}
+
+/* INPUT */
+.cart-page input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: 1px solid gold;
+  background: black;
+  color: gold;
+  outline: none;
+}
+
+.cart-page input::placeholder {
+  color: #aaa;
+}
+
+/* CHECKOUT BUTTON */
+.cart-page button:last-of-type {
+  width: 100%;
+  background: gold;
+  color: black;
+  padding: 12px;
+  margin-top: 15px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cart-page button:last-of-type:hover {
+  background: white;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-item img {
+    width: 100%;
+    height: 150px;
+  }
+
+  .qty-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .cart-item button {
+    width: 100%;
+  }
+}

@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
+import "./CartPage.css";
 
 export default function CartPage() {
 
