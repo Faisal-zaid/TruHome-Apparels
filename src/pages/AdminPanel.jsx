@@ -14,6 +14,9 @@ export default function AdminPanel() {
   const [category, setCategory] = useState("");
   const [items, setItems] = useState([]);
 
+  const [inventory, setInventory] = useState([]);
+
+
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -290,7 +293,35 @@ export default function AdminPanel() {
       console.error(error);
     }
   }
+async function handleDeleteCategory(id) {
+  if (!window.confirm("Delete this category?")) return;
 
+  try {
+    const res = await fetch(`https://truhome-backend-8.onrender.com/categories/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (res.ok) {
+      alert("Category deleted");
+      fetchCategories();
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function fetchInventory() {
+  const res = await fetch("https://truhome-backend-8.onrender.com/products/inventory", {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const data = await res.json();
+  setInventory(data);
+}
+
+useEffect(() => {
+  fetchInventory();
+}, []);
   return (
 
     <div className="admin-panel">
@@ -331,7 +362,19 @@ export default function AdminPanel() {
 
         </select>
 
+     
       </label>
+
+         <h3>Categories</h3>
+<ul>
+  {categories.map(c => (
+    <li key={c.id}>
+      {c.name} 
+      <button onClick={() => handleDeleteCategory(c.id)}>Delete</button>
+    </li>
+  ))}
+</ul>
+
 
       <form onSubmit={handleSubmit}>
 
@@ -428,6 +471,31 @@ export default function AdminPanel() {
         ))}
 
       </div>
+      <h3>Inventory</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Sold</th>
+      <th>Revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    {inventory.map(item => (
+      <tr key={item.id}>
+        <td>{item.name}</td>
+        <td>{item.category}</td>
+        <td>{item.price}</td>
+        <td>{item.quantity}</td>
+        <td>{item.sold || 0}</td>
+        <td>{(item.sold || 0) * item.price}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
 
     </div>
 
