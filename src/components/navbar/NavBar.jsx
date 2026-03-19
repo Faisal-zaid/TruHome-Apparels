@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import AdminLogin from "../../pages/AdminLogin";
 import AdminRegister from "../../pages/AdminRegister";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { CartContext } from "../../context/CartContext";
+
 
 export default function NavBar({ onAdminLogin }) {
 
@@ -29,14 +28,6 @@ export default function NavBar({ onAdminLogin }) {
     setShowRegister(true);
     setShowLogin(false); // make sure login modal is closed
   }
-
-  function handleAdminClick() {
-  navigate("/admin-login");
-}
-
-function handleRegisterClick() {
-  navigate("/admin-register");
-}
 
   return (
     <div className="main">
@@ -127,18 +118,23 @@ function handleRegisterClick() {
 
       {/* Admin Login Modal */}
       {showLogin && (
-        <AdminLogin
-          onLogin={(success) => {
-            if (success) {
-              setShowLogin(false);
-              onAdminLogin(true);
-            }
-          }}
-        />
-      )}
+  <div className="modal">
+    <AdminLogin
+      onLogin={(success) => {
+        if (success) {
+          setShowLogin(false);
+          onAdminLogin(true);
+        }
+      }}
+    />
+  </div>
+)}
 
-      {/* Admin Register Modal */}
-      {showRegister && <AdminRegister />}
+{showRegister && (
+  <div className="modal">
+    <AdminRegister />
+  </div>
+)}
 
     </div>
   );
