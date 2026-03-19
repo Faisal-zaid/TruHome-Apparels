@@ -58,13 +58,13 @@ function App() {
               </>
             }
           />
-           
-          <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/:category" element={<ProductsPage />} />
-          <Route path="/cart" element={<CartPage />} />
-        </Routes>
+          
+          <Route path="/categories" element={<Categories />} />
 
-        
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/:category" element={<ProductsPage />} />
+        </Routes>
       </div>
     </Router>
   );
