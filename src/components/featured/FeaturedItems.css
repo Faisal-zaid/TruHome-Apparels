@@ -28,8 +28,9 @@
 /* GRID */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 per row */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
+  justify-items: center; /* centers items in their cell */
 }
 
 /* CARD */
@@ -69,7 +70,7 @@
 /* 📱 MOBILE */
 @media (max-width: 768px) {
   .product-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 per row */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .product-card img {
