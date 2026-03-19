@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import AdminLogin from "../../pages/AdminLogin";
 import AdminRegister from "../../pages/AdminRegister";
 import { useNavigate } from "react-router-dom";
-const { cart } = useContext(CartContext);
-
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 
 export default function NavBar({ onAdminLogin }) {
 
@@ -119,23 +119,18 @@ export default function NavBar({ onAdminLogin }) {
 
       {/* Admin Login Modal */}
       {showLogin && (
-  <div className="modal">
-    <AdminLogin
-      onLogin={(success) => {
-        if (success) {
-          setShowLogin(false);
-          onAdminLogin(true);
-        }
-      }}
-    />
-  </div>
-)}
+        <AdminLogin
+          onLogin={(success) => {
+            if (success) {
+              setShowLogin(false);
+              onAdminLogin(true);
+            }
+          }}
+        />
+      )}
 
-{showRegister && (
-  <div className="modal">
-    <AdminRegister />
-  </div>
-)}
+      {/* Admin Register Modal */}
+      {showRegister && <AdminRegister />}
 
     </div>
   );

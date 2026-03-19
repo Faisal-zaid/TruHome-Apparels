@@ -60,7 +60,6 @@ function App() {
           />
            
           <Route path="/admin" element={<AdminPanel />} />
-          
           <Route path="/:category" element={<ProductsPage />} />
           <Route path="/cart" element={<CartPage />} />
         </Routes>
