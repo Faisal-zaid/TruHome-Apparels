@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import AdminLogin from "../../pages/AdminLogin";
 import AdminRegister from "../../pages/AdminRegister";
 import { useNavigate } from "react-router-dom";
+const { cart } = useContext(CartContext);
 
 
 export default function NavBar({ onAdminLogin }) {
