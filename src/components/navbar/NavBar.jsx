@@ -124,6 +124,7 @@ export default function NavBar({ onAdminLogin }) {
             if (success) {
               setShowLogin(false);
               onAdminLogin(true);
+              navigate("/admin");
             }
           }}
         />
