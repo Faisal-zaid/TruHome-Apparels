@@ -30,6 +30,14 @@ export default function NavBar({ onAdminLogin }) {
     setShowLogin(false); // make sure login modal is closed
   }
 
+  function handleAdminClick() {
+  navigate("/admin-login");
+}
+
+function handleRegisterClick() {
+  navigate("/admin-register");
+}
+
   return (
     <div className="main">
 

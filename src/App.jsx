@@ -60,6 +60,8 @@ function App() {
           />
            
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin-login" element={<AdminLogin onLogin={() => setShowAdmin(true)} />} />
+  <Route path="/admin-register" element={<AdminRegister />} />
           <Route path="/:category" element={<ProductsPage />} />
           <Route path="/cart" element={<CartPage />} />
         </Routes>
