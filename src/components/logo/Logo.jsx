@@ -1,5 +1,5 @@
 import React from 'react'
-import homePhoto from "../../photo/home.png"
+import homePhoto from "../../photo/home.jpeg"
 import "./Logo.css"
 
 
