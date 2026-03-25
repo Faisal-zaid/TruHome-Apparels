@@ -34,4 +34,7 @@
   }
   .img-pic img {margin: 0;
   }
+  .img-pic img{
+    height: 300px;
+  }
 }
