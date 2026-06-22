@@ -6,9 +6,10 @@ export default function CartPage() {
 
   const { cart, removeFromCart, increaseQty, decreaseQty, clearCart } = useContext(CartContext);
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   
 
-async function checkout(phone) {
+async function checkout(phone, email) {
 
   let formattedPhone = phone;
 
@@ -26,9 +27,10 @@ async function checkout(phone) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          phone: formattedPhone,
-          items: cart
-        })
+    phone: formattedPhone,
+    email: email,
+    items: cart
+})
       }
     );
 
@@ -86,12 +88,21 @@ async function checkout(phone) {
           <h3>Total: Ksh {total}</h3>
 
           <input
-            placeholder="07XXXXXXXX"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
+  type="email"
+  placeholder="Email address"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
 
-          <button onClick={() => checkout(phone)}>Checkout</button>
+<input
+  placeholder="07XXXXXXXX"
+  value={phone}
+  onChange={(e) => setPhone(e.target.value)}
+/>
+
+          <button onClick={() => checkout(phone, email)}>
+  Checkout
+</button>
         </>
       )}
 
