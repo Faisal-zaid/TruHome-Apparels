@@ -9,6 +9,17 @@
   text-align: center;
 }
 
+.hero-section {
+    background:
+        radial-gradient(
+            circle at 85% 35%,
+            #f2bd3f 0%,
+            #c88b20 25%,
+            #6f450e 50%,
+            #241505 72%,
+            #050505 100%
+        );
+}
 
 .img-pic img {
   width: 100%;
