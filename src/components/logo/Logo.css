@@ -10,15 +10,15 @@
 }
 
 .hero-section {
-    background:
-        radial-gradient(
-            circle at 85% 35%,
-            #f2bd3f 0%,
-            #c88b20 25%,
-            #6f450e 50%,
-            #241505 72%,
-            #050505 100%
-        );
+    background: linear-gradient(
+        110deg,
+        #030303 0%,
+        #0b0804 20%,
+        #241505 40%,
+        #70480e 62%,
+        #c18a22 82%,
+        #efbd45 100%
+    );
 }
 
 .img-pic img {
