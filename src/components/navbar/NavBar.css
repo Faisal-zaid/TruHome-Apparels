@@ -58,7 +58,7 @@
     color: rgba(248, 232, 142, 0.74);
     padding-top: 5px;
     padding-bottom: 5px;
-    border-bottom: 5px solid gold;
+    /* border-bottom: 5px solid gold; */
 }
 
 .navs ul{
