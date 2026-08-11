@@ -11,8 +11,8 @@ export default function Logo() {
 
 
 //     </div>
-<div>
-  
+<div className='hero-section'>
+
 </div>
   )
 }
