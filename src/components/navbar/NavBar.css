@@ -33,6 +33,10 @@
   flex-wrap: wrap; /* Important: allows it to wrap on small screens */
 }
 
+.shop-name .icons svg{
+  color: black;
+}
+
 .jina{
     padding-top: 13px;
     padding-left: 15px;
