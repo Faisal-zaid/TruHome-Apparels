@@ -50,7 +50,7 @@ function App() {
             path="/"
             element={
               <>
-                <Logo />
+                {/* <Logo /> */}
                 <FeaturedItems />
                 <Categories />
                 <NewArrivals />
