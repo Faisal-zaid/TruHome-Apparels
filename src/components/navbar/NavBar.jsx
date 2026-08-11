@@ -123,7 +123,7 @@ export default function NavBar({ onAdminLogin }) {
 
       {/* Admin Register Modal */}
       {showRegister && <AdminRegister />}
-      <div className="hero-section">
+      <div className="hero">
         <div className="text"> TruHome Apparels </div>
       </div>
     </div>

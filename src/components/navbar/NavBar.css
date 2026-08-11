@@ -1,8 +1,26 @@
+.main{
+  background:
+    radial-gradient(
+      ellipse at 90% 30%,
+      #ffd700 0%,
+      #d4a900 20%,
+      #8f6b00 40%,
+      transparent 68%
+    ),
+    linear-gradient(
+      110deg,
+      #000000 0%,
+      #050403 25%,
+      #120e02 45%,
+      #3a2b00 65%,
+      #765900 82%,
+      #b88a00 100%
+    );
+}
 .shop-name {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
   min-height: 60px;
   color: gold;
   padding: 10px 20px;
@@ -28,7 +46,6 @@
 }
 
 .navs{
-    background-color: black;
     color: rgba(248, 232, 142, 0.74);
     padding-top: 5px;
     padding-bottom: 5px;
