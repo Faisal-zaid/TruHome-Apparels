@@ -123,8 +123,20 @@ export default function NavBar({ onAdminLogin }) {
 
       {/* Admin Register Modal */}
       {showRegister && <AdminRegister />}
+      {/* Hero Section */}
       <div className="hero">
-        <div className="text"> TruHome Apparels </div>
+        <div className="hero-overlay"></div>
+        <div className="hero-content">
+          <span className="hero-subtitle">Elegance & Perfection</span>
+          <h1 className="hero-title">TRUHOME APPARELS</h1>
+          <p className="hero-description">
+            Discover curated fashion, luxury fits, and premium quality crafted for your everyday style.
+          </p>
+          <div className="hero-buttons">
+            <Link to="/categories" className="btn-primary">Shop Collection</Link>
+            <a href="#contact" className="btn-secondary">Explore More</a>
+          </div>
+        </div>
       </div>
     </div>
   );
