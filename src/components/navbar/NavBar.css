@@ -30,13 +30,11 @@
   min-height: 60px;
   color: gold;
   padding: 10px 20px;
-  flex-wrap: wrap;
 }
 
 .jina {
-  padding-top: 13px;
-  padding-left: 15px;
   font-size: 20px;
+  font-weight: bold;
   transition: all 0.2s ease;
 }
 
@@ -47,12 +45,18 @@
 .icons {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   position: relative;
 }
 
+.cart-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .icons svg {
-  color: black;
+  color: gold;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
@@ -64,13 +68,13 @@
 .cart-badge {
   background-color: #e74c3c;
   color: white;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: bold;
   padding: 2px 6px;
   border-radius: 50%;
-  position: relative;
-  top: -10px;
-  left: -8px;
+  position: absolute;
+  top: -8px;
+  right: -8px;
 }
 
 .navs {
@@ -114,7 +118,7 @@
 /* --- Professional Hero Section --- */
 .hero {
   width: 100%;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 120px);
   position: relative;
   display: flex;
   align-items: center;
@@ -256,11 +260,6 @@
 
 /* Tablet (Max 900px) */
 @media (max-width: 900px) {
-  .shop-name {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
   .navs ul {
     display: none;
     flex-direction: column;
@@ -283,45 +282,52 @@
 
 /* Mobile Devices (Max 600px) */
 @media (max-width: 600px) {
+  .hero {
+    min-height: auto;
+    padding: 1rem 0.75rem;
+  }
+
   .hero-content {
-    padding: 2rem 1.25rem;
+    padding: 1.8rem 1rem;
     border-radius: 12px;
   }
   
   .hero-buttons {
     flex-direction: column;
+    gap: 0.6rem;
     width: 100%;
   }
 
   .btn-primary, .btn-secondary {
     width: 100%;
+    padding: 0.65rem 1rem;
+    font-size: 0.8rem;
+    box-sizing: border-box;
     text-align: center;
   }
 
   .shop-name {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 15px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
   }
 
   .jina {
-    font-size: 1.1rem;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1rem;
     padding-left: 0;
   }
 
   .icons {
     display: flex;
     flex-direction: row;
-    gap: 12px;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    margin-top: 10px;
+    gap: 10px;
+    margin-top: 0;
+    width: auto;
   }
 
   .icons svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 }
